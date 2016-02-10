@@ -1,6 +1,7 @@
 angular.module('app')
 .directive('chart', chart)
-
+var w = 300
+var h = 300
 function chart() {
   // var dataset = [5, 10, 15, 20, 25, 17, 3, 46]
 
@@ -58,26 +59,38 @@ function drawTreeOfLife($scope, $element, $attr) {
   function visualizeIt(treeData) {
     var nodes = tree.nodes(treeData)
     var link = viz.selectAll('pathlink') // what's pathlink?
-    .data(tree.links(nodes))
-    .enter()
-    .append('svg:path')
-    .attr('class', 'link')
-    .attr('d', diagonal)
+      .data(tree.links(nodes))
+      .enter()
+      .append('svg:path')
+      .attr('class', 'link')
+      .attr('d', diagonal)
 
     var node = viz.selectAll('g.node')
-    .data(nodes)
-    .enter()
-    .append('svg:g')
-    // Move the node based on its data. Can this be done with diagonal()?
-    .attr('transform', function(d) {return 'translate(' + d.y + ',' + d.x + ')'})
+      .data(nodes)
+      .enter()
+      .append('svg:g')
+      // Move the node based on its data. Can this be done with diagonal()?
+      .attr('transform', function(d) {return 'translate(' + d.y + ',' + d.x + ')'})
 
     node.append('svg:circle')
-    // .attr('r', 3)
-    .attr({
-      r: 3,
-      stroke: "tomato",
-      fill: "#fff"
-    })
+      // .attr('r', 3)
+      .attr({
+        r: 3,
+        stroke: "tomato",
+        fill: "#fff"
+      })
+
+      node.append("text")
+        .text(function(d) {
+          console.log(d);
+          return d.name
+        })
+        .attr({
+          "text-anchor": "middle",
+          // x: function(d, i) { return d.x },
+          // y: function(d) { return d.y },
+          "font-family": "sans-serif"
+        })
 
     console.log(nodes);
   }
