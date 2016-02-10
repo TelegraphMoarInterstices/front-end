@@ -1,0 +1,40 @@
+{
+  "name": "Chordata",
+  "children": [
+    {"name": "Mammal",
+      "children": [
+        {"name": "Primate",
+          "children": [
+            {"name": "Lemuridae",
+              "children": [
+                {
+                  "name": "Lemur",
+                  "children": [
+                    {
+                      "name": "Ring-tailed Lemur"
+                    }
+                  ]
+                }
+              ]
+            },
+            {"name": "A112"},
+            {"name": "A113"}
+          ]
+        },
+        {"name": "A12"},
+        {"name": "A13"}
+      ]
+    },
+    {"name": "Reptile",
+      "children": [
+        {"name": "A21",
+          "children": [
+            {"name": "A211"},
+            {"name": "A212"}
+          ]},
+        {"name": "A22"},
+        {"name": "A23"}
+      ]},
+    {"name": "A3"}
+  ]
+}

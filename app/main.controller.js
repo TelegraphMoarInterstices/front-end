@@ -4,5 +4,4 @@ angular.module('app')
 function MainController($scope) {
     //initial values
     $scope.data = [5, 10, 15, 20, 25, 17, 3, 46]
-    $scope.circleSize = 50
 }

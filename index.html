@@ -9,16 +9,8 @@
   </head>
   <body>
     <div ng-controller="MainController">
-      <h2>A bar chart showing data defined on the controller</h2>
+      <h2>Stick of life</h2>
       <chart data="data"></chart>
-      <hr>
-      <h2>A circle that (hopefully one day) is updated by the value in the input field</h2>
-      <p>
-        I want this input field to update the circle size, but it doesn't yet.
-      </p>
-      <input ng-model="circleSize">
-      <p>Circle size: {{circleSize}}</p>
-      <circle circle-size="circleSize"></circle>
     </div>
 
     <script src="/bower_components/angular/angular.js"></script>
@@ -26,7 +18,5 @@
     <script src="/app/app.js"></script>
     <script src="/app/main.controller.js"></script>
     <script src="/app/chart.directive.js"></script>
-    <script src="/app/circle.directive.js"></script>
-
   </body>
 </html>
