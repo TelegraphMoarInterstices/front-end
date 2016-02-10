@@ -1,11 +1,13 @@
 {
   "name": "Chordata",
   "children": [
-    {"name": "Mammal",
+    {
+      "name": "Mammalia",
       "children": [
         {"name": "Primate",
           "children": [
-            {"name": "Lemuridae",
+            {
+              "name": "Lemuridae",
               "children": [
                 {
                   "name": "Lemur",
@@ -17,24 +19,40 @@
                 }
               ]
             },
-            {"name": "A112"},
-            {"name": "A113"}
+            {
+              "name": "Catarrhini",
+              "children": [
+                {"name": "Cercopithecoidea"},
+                {
+                  "name": "Hominoidea",
+                  "children": [
+                    {"name": "Ponginae"},
+                    {"name": "Gorillinae"},
+                    {"name": "Homininae"}
+                  ]
+                }
+              ]
+            },
+            {"name": "Lorisiformes"}
           ]
         },
-        {"name": "A12"},
-        {"name": "A13"}
+        {"name": "Marsupialia"},
+        {"name": "Cetacea"},
+        {"name": "Proboscidea"}
       ]
     },
-    {"name": "Reptile",
+    {
+      "name": "Aves",
       "children": [
-        {"name": "A21",
+        {"name": "Struthioniformes",
           "children": [
-            {"name": "A211"},
-            {"name": "A212"}
+            {"name": "Emu"},
+            {"name": "Ostrich"},
+            {"name": "Kiwi"}
           ]},
-        {"name": "A22"},
-        {"name": "A23"}
+        {"name": "Turniciformes"},
+        {"name": "Piciformes"}
       ]},
-    {"name": "A3"}
+    {"name": "Reptilia"}
   ]
 }
