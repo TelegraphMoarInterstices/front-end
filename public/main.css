@@ -1,3 +1,7 @@
+body * {
+  /*outline: pink 1px dotted;*/
+}
+
 body {
         display: flex;
         flex-direction: column;

@@ -21,15 +21,15 @@ function drawTreeOfLife($scope, $element, $attr) {
   // Set up the svg container for the visualization named 'viz'
   var viz = d3.select($element[0])
     .append('svg')
-    .attr('width', 400)
-    .attr('height', 300)
+    .attr('width', 800)
+    .attr('height', 800)
     .append('svg:g')
     .attr('transform', 'translate(40, 0)')
 
   // Initialize the tree layout?
   var tree =
     d3.layout.tree()
-      .size([300, 150])
+      .size([600, 600])
 
   // Get the x and y from the data
   // Use this to set the 'diagonal' for the pathlink
