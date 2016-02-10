@@ -48,7 +48,7 @@ function drawTreeOfLife($scope, $element, $attr) {
 
 /***** Execution ****/
   // var data
-  d3.json("/treeData.json", function(error, data) {
+  d3.json("./treeData.json", function(error, data) {
     if (error) return console.warn(error);
     // console.log(data);
     visualizeIt(data);

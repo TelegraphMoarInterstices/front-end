@@ -1,0 +1,9 @@
+{
+  "firebase": "twig-of-life",
+  "public": "public",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
