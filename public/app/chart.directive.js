@@ -87,9 +87,7 @@ function drawTreeOfLife($scope, $element, $attr) {
         })
         .attr({
           "text-anchor": "middle",
-          // x: function(d, i) { return d.x },
-          // y: function(d) { return d.y },
-          "font-family": "sans-serif"
+          y: -10 // Move label up slightly so it doesn't crowd the node.
         })
 
     console.log(nodes);
