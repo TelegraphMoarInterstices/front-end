@@ -13,7 +13,8 @@
                   "name": "Lemur",
                   "children": [
                     {
-                      "name": "Ring-tailed Lemur"
+                      "name": "Ring-tailed Lemur",
+                      "habitat": "Very cute."
                     }
                   ]
                 }
@@ -28,7 +29,10 @@
                   "children": [
                     {"name": "Ponginae"},
                     {"name": "Gorillinae"},
-                    {"name": "Homininae"}
+                    {
+                      "name": "Homininae",
+                      "habitat": "Hey, that's me!"
+                    }
                   ]
                 }
               ]

@@ -3,8 +3,6 @@ angular.module('app')
 var w = 300
 var h = 300
 function chart() {
-  // var dataset = [5, 10, 15, 20, 25, 17, 3, 46]
-
   return {
     restrict: 'E',
     replace: true,
@@ -26,6 +24,11 @@ function drawTreeOfLife($scope, $element, $attr) {
     .attr('height', 800)
     .append('svg:g')
     .attr('transform', 'translate(40, 0)')
+
+  // The info that pops up on hover
+  var tooltip = d3.select("body").append("div")
+                        .attr("class", "tooltip")
+                        .style("opacity", 0);
 
   // Initialize the tree layout?
   var tree =
@@ -71,6 +74,32 @@ function drawTreeOfLife($scope, $element, $attr) {
       .append('svg:g')
       // Move the node based on its data. Can this be done with diagonal()?
       .attr('transform', function(d) {return 'translate(' + d.y + ',' + d.x + ')'})
+      .on("mouseover", function(d) {
+        tooltip
+          .transition()
+          .duration(500)
+          .style("opacity", 0.9);
+        tooltip
+          .html(
+            "<strong>" +
+            "<h3>" +
+            d.habitat +
+            "</h3>" +
+            "<div>" +
+            '<img src="http://lorempixel.com/100/100/animals/">' +
+            '</div>' +
+            '<a href="#">Learn more...</a>' +
+            "</strong>"
+          )
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on('mouseout', function(){
+        tooltip
+          .transition()
+          .duration(1000)
+          .style("opacity", 0);
+      })
 
     node.append('svg:circle')
       // .attr('r', 3)
@@ -80,9 +109,9 @@ function drawTreeOfLife($scope, $element, $attr) {
         fill: "#fff"
       })
 
+
       node.append("text")
         .text(function(d) {
-          console.log(d);
           return d.name
         })
         .attr({
