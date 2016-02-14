@@ -5,7 +5,10 @@
 // how to get the real deal wired up.
 
 var dendrogramService = {
-  initialize: initializeSvg
+  initializeSvg: initializeSvg,
+  initializeTree: initializeTree,
+  diagonal: diagonal,
+  initializeTooltip: initializeTooltip
 }
 
 /*** Implementation ***/
@@ -17,4 +20,30 @@ function initializeSvg(element) {
   .attr('height', 800)
   .append('svg:g')
   .attr('transform', 'translate(40, 0)')
+}
+
+function initializeTree(width, height) {
+  return d3.layout.tree()
+  .size([width, height])
+}
+
+function diagonal(type) {
+  if (type === 'cartesian') {
+    return d3.svg.diagonal()
+    .projection(function(d) {return [d.y, d.x]})
+  }
+  if (type === 'radial') {
+    return d3.svg.diagonal()
+      .projection(function(d) {
+        var r = d.y
+        var a = (d.x - 90) / 180 * Math.PI;
+        return [r * Math.cos(a), r * Math.sin(a)];
+      })
+  }
+}
+
+function initializeTooltip() {
+  return d3.select("body").append("div")
+   .attr("class", "tooltip")
+   .style("opacity", 0);
 }
