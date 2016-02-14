@@ -1,13 +1,13 @@
 (function() {
   angular.module('app')
-  .directive('chart', chart)
+  .directive('dendrogram', dendrogram)
   var w = 300
   var h = 300
-  function chart() {
+  function dendrogram() {
     return {
       restrict: 'E',
       replace: true,
-      template: '<div class="chart"></div>',
+      template: '<div class="dendrogram"></div>',
       scope: {
         data: '='
       },
