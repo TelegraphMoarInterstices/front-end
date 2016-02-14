@@ -11,7 +11,10 @@
       scope: {
         data: '='
       },
-      link: drawTreeOfLife
+      link: drawTreeOfLife,
+      controller: 'DendrogramController',
+      controllerAs: 'vm',
+      bindToController: true
     }
   }
 
@@ -120,7 +123,7 @@
             y: -10 // Move label up slightly so it doesn't crowd the node.
           })
 
-      console.log(nodes);
+      // console.log(nodes);
     }
   }
 })()

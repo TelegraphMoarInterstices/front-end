@@ -2,8 +2,12 @@
   angular.module('app')
   .controller('DendrogramController', DendrogramController)
 
-  function DendrogramController($scope) {
-      //initial values
-      $scope.data = [5, 10, 15, 20, 25, 17, 3, 46]
+  function DendrogramController() {
+    var vm = this
+    
+    // Maybe do an $http to retrieve json data here,
+    // instead of using D3.json. Not sure which is best.
+    // Right now, .data is not doing anything, obvs.
+    vm.data = 'whatever'
   }
 })()
