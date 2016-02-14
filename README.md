@@ -41,4 +41,14 @@ This is the front end for the tree of life visualization project. See the reposi
 
 ## To run this on your machine
 First, do this to install Angular and D3:
-`$ bower install`
+
+```
+$ bower install
+```
+
+Then go into the public folder and run a local server:
+
+```
+$ cd public
+$ http-server
+```
