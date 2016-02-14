@@ -1,8 +1,10 @@
 (function() {
   angular.module('app')
-  .directive('dendrogram', dendrogram)
+  .directive('dendrogram', [dendrogram])
+
   var w = 300
   var h = 300
+
   function dendrogram() {
     return {
       restrict: 'E',
@@ -20,14 +22,7 @@
 
   function drawTreeOfLife($scope, $element, $attr) {
     /***** Initialization ****/
-
-    // Set up the svg container for the visualization named 'viz'
-    var viz = d3.select($element[0])
-      .append('svg')
-      .attr('width', 800)
-      .attr('height', 800)
-      .append('svg:g')
-      .attr('transform', 'translate(40, 0)')
+    var viz = dendrogramService.initialize($element)
 
     // The info that pops up on hover
     var tooltip = d3.select("body").append("div")
