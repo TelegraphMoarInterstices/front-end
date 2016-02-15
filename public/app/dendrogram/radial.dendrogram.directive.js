@@ -2,8 +2,6 @@
   angular.module('app')
   .directive('radialdendrogram', dendrogram)
 
-  var diameter = 1250;
-
   function dendrogram() {
     return {
       restrict: 'E',
@@ -21,6 +19,9 @@
 
   function drawTreeOfLife($scope, $element, $attr) {
     /***** Initialization ****/
+
+    var tooltip = dendrogramService.initializeTooltip()
+
     var diameter = 1250;
 
     var viz = d3.select($element[0]).append("svg")
@@ -86,22 +87,22 @@
               .style("left", (d3.event.pageX) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
           })
+          .on('mouseout', function(){
+            tooltip
+              .transition()
+              .duration(1000)
+              .style("opacity", 0);
+          })
 
       node.append("circle")
-          .attr("r", 3);
+          .attr("r", 6);
 
       node.append("text")
           .attr("dy", 3)
           .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
           .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
           .text(function(d) { return d.name; })
-      //makes nodes larger when they are hovered over and then reverts after mouseoff
-      node.on("mouseover", function(d){
-        node.style("font-size", "14px")
-      });
-      node.on("mouseout", function(d){
-        node.style("font-size", "")
-      });
+
     }
 
 
