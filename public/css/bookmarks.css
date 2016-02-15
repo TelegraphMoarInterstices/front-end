@@ -1,0 +1,12 @@
+.bookmarks-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.bookmark {
+  margin-bottom: 10px;
+}
+
+.bookmark span {
+  margin-right: 8px;
+}
