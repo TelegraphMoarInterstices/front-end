@@ -16,7 +16,13 @@
 
 .link {
   fill: none;
-  stroke: aqua;
+  stroke: #0FC3C3;
+  stroke-width: 1px;
+}
+
+.node circle{
+  fill: white;
+  stroke: orange;
   stroke-width: 1px;
 }
 
