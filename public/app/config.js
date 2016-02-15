@@ -5,11 +5,11 @@ function configRoutes($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/',
-      templateUrl: 'app/layout/dendrogram.html'
+      templateUrl: 'app/dendrogram/dendrogram.html'
     })
     .state('bookmarks', {
       url: '/bookmarks',
-      templateUrl: 'app/layout/bookmarks.html'
+      templateUrl: 'app/bookmarks/bookmarks.html'
     })
 
     $urlRouterProvider.otherwise('/')
