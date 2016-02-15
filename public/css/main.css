@@ -13,10 +13,15 @@ body {
 }
 
 a {
-  color: tomato;
+  color: #0DA2A2;
   text-decoration: none;
+}
+
+a:hover {
+  color: #0FC3C3;
 }
 
 main {
   margin-top: 40px;
+  width: 100%;
 }
