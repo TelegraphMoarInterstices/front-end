@@ -2,6 +2,18 @@
   display: flex;
 }
 
+.dendrogram {
+  flex: 3;
+}
+
+.filter {
+  flex: 1;
+  background: #888;
+  color: #ddd;
+  padding: 30px;
+  height: 400px;
+}
+
 .link {
   fill: none;
   stroke: aqua;
@@ -28,11 +40,4 @@ div.tooltip {
 div.tooltip img {
   border-radius: 50%;
   margin: 5px;
-}
-
-.filter {
-  background: #888;
-  color: #ddd;
-  padding: 30px;
-  height: 400px;
 }
