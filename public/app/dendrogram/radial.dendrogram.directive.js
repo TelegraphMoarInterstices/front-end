@@ -49,7 +49,10 @@
           .data(links)
         .enter().append("path")
           .attr("class", "link")
-          .attr("d", diagonal);
+          .attr("d", diagonal)
+          .on("mouseover", function(d){
+            link.style("stroke", "red");
+          });
 
       var node = viz.selectAll(".node")
           .data(nodes)
