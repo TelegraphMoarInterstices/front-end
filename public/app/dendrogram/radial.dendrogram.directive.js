@@ -27,11 +27,11 @@
         .attr("width", diameter)
         .attr("height", diameter)
         .append("g")
-        .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+        .attr("transform", "translate(" + diameter / 3 + "," + diameter / 2 + ")");
 
     var tree = d3.layout.tree()
         .size([360, diameter / 3-1])
-        .separation(function(a, b) { return (a.parent == b.parent ? 1: 1) / a.depth; });
+        .separation(function(a, b) { return (a.parent == b.parent ? 2: 1) / a.depth; });
 
     var diagonal = d3.svg.diagonal.radial()
         .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
@@ -56,8 +56,8 @@
             link.style("stroke-width", "2px");
           })
           .on("mouseout", function(d){
-            link.style("stroke", "aqua")
-            link.style("stroke-width", "1px");
+            link.style("stroke", "")
+            link.style("stroke-width", "");
           });
 
       var node = viz.selectAll(".node")
@@ -97,14 +97,14 @@
           .text(function(d) { return d.name; })
       //makes nodes larger when they are hovered over and then reverts after mouseoff
       node.on("mouseover", function(d){
-        node.style("font-size", "3vw")
+        node.style("font-size", "14px")
       });
       node.on("mouseout", function(d){
-        node.style("font-size", "2vw")
+        node.style("font-size", "")
       });
     }
 
 
-      d3.select(self.frameElement).style("height", diameter - 150 + "px");
+      d3.select(self.frameElement).style("height", diameter - 10 + "px");
  };
 })();

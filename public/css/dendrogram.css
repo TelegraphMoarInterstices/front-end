@@ -20,6 +20,12 @@
   stroke-width: 1px;
 }
 
+.node circle{
+  fill: white;
+  stroke: orange;
+  stroke-width: 1px;
+}
+
 div.tooltip {
              position: absolute;
              max-width: 200px;
