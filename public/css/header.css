@@ -1,0 +1,34 @@
+header {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  width: 100%;
+}
+
+.nav {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.site-title h1 {
+  margin: 0;
+  margin-left: 20px;
+  padding: 10px;
+  background: #333;
+  color: white;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-left: 30px;
+}
+
+.nav-link a {
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px;
+  border-bottom: 5px solid #333;
+}
