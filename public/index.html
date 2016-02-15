@@ -3,17 +3,35 @@
   <head>
     <meta charset="utf-8">
     <title>D3 in an Angular App</title>
-    <link rel="stylesheet" href="./main.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="/css/main.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="/css/dendrogram.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="/css/header.css" media="screen" charset="utf-8">
   </head>
   <body>
-    <div ng-controller="DendrogramController as dendrogram">
-      <h2>Twig of life</h2>
-      <dendrogram data="dendrogram.data"></dendrogram>
-    </div>
+    <header>
+      <div class="site-title">
+        <h1 ui-sref="home">Twig of Life</h1>
+      </div>
+      <nav class="nav">
+        <div class="nav-link">
+          <a ui-sref="bookmarks">Bookmarks</a>
+        </div>
+        <div class="nav-link">
+          <a ui-sref="">Login</a>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div ui-view></div>
+    </main>
 
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/d3/d3.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
     <script src="/app/app.module.js"></script>
+    <script src="/app/config.js"></script>
+
     <script src="/app/dendrogram/dendrogram.factory.js"></script>
     <script src="/app/dendrogram/dendrogram.controller.js"></script>
     <script src="/app/dendrogram/dendrogram.directive.js"></script>
