@@ -50,8 +50,14 @@
         .enter().append("path")
           .attr("class", "link")
           .attr("d", diagonal)
+          //changes link color and thickness when hovered over, reverts when mouseoff
           .on("mouseover", function(d){
-            link.style("stroke", "red");
+            link.style("stroke", "red")
+            link.style("stroke-width", "2px");
+          })
+          .on("mouseout", function(d){
+            link.style("stroke", "aqua")
+            link.style("stroke-width", "1px");
           });
 
       var node = viz.selectAll(".node")
@@ -88,7 +94,14 @@
           .attr("dy", 3)
           .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
           .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-          .text(function(d) { return d.name; });
+          .text(function(d) { return d.name; })
+      //makes nodes larger when they are hovered over and then reverts after mouseoff
+      node.on("mouseover", function(d){
+        node.style("font-size", "3vw")
+      });
+      node.on("mouseout", function(d){
+        node.style("font-size", "2vw")
+      });
     }
 
 
