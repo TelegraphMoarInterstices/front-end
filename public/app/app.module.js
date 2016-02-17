@@ -1,3 +1,3 @@
 (function() {
-  angular.module('app', ['ui.router','auth0'])
+  angular.module('app', ['ui.router'])
 })()
