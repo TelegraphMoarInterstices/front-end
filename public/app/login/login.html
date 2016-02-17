@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app.auth">
   <head>
     <meta charset="utf-8">
     <title>D3 in an Angular App</title>
@@ -10,20 +10,27 @@
   </head>
   <body>
     <main>
-      <div ui-view></div>
+      <div ui-view>
+      </div>
+      <div>
+        <div ng-controller="LoginCtrl">
+          <input type="submit" ng-click="login()"/>
+        </div>
+      </div>
     </main>
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/d3/d3.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
-    <script src="/app/app.module.js"></script>
+    <!-- Setting the right viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- <script src="/app/app.module.js"></script> -->
     <script src="/app/config.js"></script>
-    <script src="/public/treeData.js"></script>
-    <script src="/app/dendrogram/dendrogram.factory.js"></script>
-    <script src="/app/dendrogram/dendrogram.controller.js"></script>
-    <script src="/app/dendrogram/dendrogram.directive.js"></script>
-    <script src="/app/dendrogram/radial.dendrogram.directive.js"></script>
-    <script src="/app/dendrogram/interactive.radial.dendrogram.directive.js"></script>
+    <script src="/app/login/login.controller.js"></script>
+
+
+
 
   </body>
 </html>
