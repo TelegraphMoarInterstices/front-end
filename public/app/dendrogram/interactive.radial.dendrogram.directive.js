@@ -33,21 +33,21 @@
     var diameter = 900;
 
     //convention with d3 seems to be to set margins as well
-    var margin = {top: 50, right: 50, bottom: 10, left: 50},
+    var margin = {top: 20, right: 10, bottom: 20, left: 10},
         width = diameter,
         height = diameter;
 
     //this sets the durations for the transitions when nodes collapse and expand in ms
     var i = 0,
-        duration = 500,
+        duration = 350,
         root;
 
 
     //this is the where the tree shap is created with size being a fraction of
     //diameter along with the relationships between nodes
     var tree = d3.layout.tree()
-        .size([360, diameter / 1-2])
-        .separation(function(a, b) { return (a.parent == b.parent*4 ? 1 : 100) / a.depth; });
+        .size([360, diameter / 1-120])
+        .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
     //sets the diagonoal projection for the dendrogram
     var diagonal = d3.svg.diagonal.radial()
@@ -58,13 +58,13 @@
         .attr("width", width)
         .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + diameter / 3 + "," + diameter / 2 + ")");
+        .attr("transform", "translate(" + diameter / 3 + "," + diameter / 2.8 + ")");
 
     //we need to set root equal to a variable, in my working example var life = a
     //big XML of data, need to figure out how to pull this from a JSON
     root = data;
 
-    root.x0 = height / 4;
+    root.x0 = height / 2;
     root.y0 = 0;
 
     //start with all children collapsed, if we nix this next line then the graph
@@ -73,7 +73,7 @@
     update(root);
 
   //setting height on the frame of the dendrogram
-    d3.select(self.frameElement).style("height", "1200");
+    d3.select(self.frameElement).style("height", "900px");
 
     //the following modifies the dendrogram using functions declared at the bottom
     //link and node variables are also declared here
@@ -103,10 +103,10 @@
 
       //adding text and setting attributes
       nodeEnter.append("text")
-          .attr("x", 10)
+          .attr("x", 10 )
           .attr("dy", ".35em")
           .attr("text-anchor", "start")
-          .attr("transform", function(d) { return d.x < 180 ? "translate(-6)" : "rotate(360)translate(6)"; })
+          .attr("transform", function(d) { return d.x < 180 ? "translate(-2)" : "rotate(360)translate(2)"; })
           // .attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.name.length * 8.5)  + ")"; })
           .text(function(d) { return d.name; })
           .style("fill-opacity", 1e-6);
@@ -114,21 +114,26 @@
       // Transition nodes to their new position.
       var nodeUpdate = node.transition()
           .duration(duration)
-          .attr("transform", function(d) { return "rotate(" + (d.x - 89.95) + ")translate(" + d.y + ")"; })
+          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
 
       nodeUpdate.select("circle")
-          .attr("r", 2.5)
+          .attr("r", 1.5)
           .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-//fix the text positioning tonight
+
+      //fixed text positioning so text on both sides of dendrogram appears correctly
       nodeUpdate.select("text")
           .style("fill-opacity", 1)
+          .attr("text-anchor", function(d) {
+            if (d.x > 180) {
+              return "end"
+            }
+          })
           .attr("transform", function(d) {
-            var nameLength = d.name.length
             if (d.x < 180) {
               var transformText = "translate(0)"
               return transformText
             } else {
-              var transformText = "rotate(180)translate(-" + (nameLength + 75)  + ")";
+              var transformText = "rotate(180)translate(-20)";
               console.log(transformText)
               return transformText
             }
@@ -139,6 +144,7 @@
           .duration(duration)
           //.attr("transform", function(d) { return "diagonal(" + source.y + "," + source.x + ")"; })
           .remove();
+
       nodeExit.select("circle")
           .attr("r", 1e-6);
 
