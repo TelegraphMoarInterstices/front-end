@@ -1,8 +1,8 @@
 (function(){
   angular.module('app')
-  .directive('dendrogram2', [dendrogram])
+  .directive('dendrogram2', ['dendrogramService', dendrogram])
 
-  function dendrogram() {
+  function dendrogram(dendrogramService) {
     return {
       restrict: 'E',
       replace: true,
@@ -16,235 +16,230 @@
       controllerAs: 'vm',
       bindToController: true
     }
-  }
+
+    function drawTreeOfLife($scope, $element, $attr){
+      d3.json("./treeData2.json", function(error, data) {
+        if (error) return console.warn(error);
+
+      //tooltip
+      // var tooltip = dendrogramService.initializeTooltip()
+
+      //setting diameter variable
+      var diameter = dendrogramService.config.diameter
+
+      //convention with d3 seems to be to set margins as well
+      var margin = {top: 20, right: 10, bottom: 20, left: 10},
+          width = diameter,
+          height = diameter;
+
+      //this sets the durations for the transitions when nodes collapse and expand in ms
+      var i = 0,
+          duration = 350,
+          root;
 
 
-  function drawTreeOfLife($scope, $element, $attr){
+      //this is the where the tree shap is created with size being a fraction of
+      //diameter along with the relationships between nodes
+      var tree = d3.layout.tree()
+          .size([360, diameter / 1-120])
+          .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
-    d3.json("./treeData2.json", function(error, data) {
-      if (error) return console.warn(error);
+      //sets the diagonoal projection for the dendrogram
+      var diagonal = d3.svg.diagonal.radial()
+          .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
 
-    //tooltip
-    // var tooltip = dendrogramService.initializeTooltip()
+      //trying to integrate vz variable structure from Zach's angular + d3 solution
+      var svg = d3.select($element[0]).append("svg")
+          .attr("width", width)
+          .attr("height", height)
+        .append("g")
+          .attr("transform", "translate(" + diameter / 3 + "," + diameter / 2.8 + ")");
 
-    //setting diameter variable
-    var diameter = 900;
+      //we need to set root equal to a variable, in my working example var life = a
+      //big XML of data, need to figure out how to pull this from a JSON
+      root = data;
 
-    //convention with d3 seems to be to set margins as well
-    var margin = {top: 20, right: 10, bottom: 20, left: 10},
-        width = diameter,
-        height = diameter;
+      root.x0 = height / 2;
+      root.y0 = 0;
 
-    //this sets the durations for the transitions when nodes collapse and expand in ms
-    var i = 0,
-        duration = 350,
-        root;
+      //start with all children collapsed, if we nix this next line then the graph
+      //will start uncollapsed with all nodes displayed
+      // root.children.forEach(collapse);
+      update(root);
 
+    //setting height on the frame of the dendrogram
+      d3.select(self.frameElement).style("height", "900px");
 
-    //this is the where the tree shap is created with size being a fraction of
-    //diameter along with the relationships between nodes
-    var tree = d3.layout.tree()
-        .size([360, diameter / 1-120])
-        .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+      //the following modifies the dendrogram using functions declared at the bottom
+      //link and node variables are also declared here
+      function update(source) {
 
-    //sets the diagonoal projection for the dendrogram
-    var diagonal = d3.svg.diagonal.radial()
-        .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
+        //compute the new tree layout
+        var nodes = tree.nodes(root),
+            links = tree.links(nodes);
 
-    //trying to integrate vz variable structure from Zach's angular + d3 solution
-    var svg = d3.select($element[0]).append("svg")
-        .attr("width", width)
-        .attr("height", height)
-      .append("g")
-        .attr("transform", "translate(" + diameter / 3 + "," + diameter / 2.8 + ")");
+        //normalize fixed-depth for each node, magically!
+        nodes.forEach(function(d) { d.y = d.depth * 80; });
 
-    //we need to set root equal to a variable, in my working example var life = a
-    //big XML of data, need to figure out how to pull this from a JSON
-    root = data;
+        //update the nodes  ...
+        var node = svg.selectAll("g.node")
+            .data(nodes, function (d) {return d.id || (d.id = ++i); });
 
-    root.x0 = height / 2;
-    root.y0 = 0;
+        //enter any new node at the parent's previous position.
+        var nodeEnter = node.enter().append("g")
+            .attr("class", "node")
+            //.attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+            .on("click", click);
 
-    //start with all children collapsed, if we nix this next line then the graph
-    //will start uncollapsed with all nodes displayed
-    // root.children.forEach(collapse);
-    update(root);
+        //adding circles to nodes
+        nodeEnter.append("circle")
+            .attr("r", 1e-6)
+            .style("fill", function(d) { return d._children ? "orange" : "#fff"; });
 
-  //setting height on the frame of the dendrogram
-    d3.select(self.frameElement).style("height", "900px");
+        //adding text and setting attributes
+        nodeEnter.append("text")
+            .attr("x", 10 )
+            .attr("dy", ".35em")
+            .attr("text-anchor", "start")
+            .attr("transform", function(d) { return d.x < 180 ? "translate(-2)" : "rotate(360)translate(2)"; })
+            // .attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.name.length * 8.5)  + ")"; })
+            .text(function(d) { return d.name; })
+            .style("fill-opacity", 1e-6);
 
-    //the following modifies the dendrogram using functions declared at the bottom
-    //link and node variables are also declared here
-    function update(source) {
+        // Transition nodes to their new position.
+        var nodeUpdate = node.transition()
+            .duration(duration)
+            .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
 
-      //compute the new tree layout
-      var nodes = tree.nodes(root),
-          links = tree.links(nodes);
+        nodeUpdate.select("circle")
+            .attr("r", 1.5)
+            .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
-      //normalize fixed-depth for each node, magically!
-      nodes.forEach(function(d) { d.y = d.depth * 80; });
+        //fixed text positioning so text on both sides of dendrogram appears correctly
+        nodeUpdate.select("text")
+            .style("fill-opacity", 1)
+            .attr("text-anchor", function(d) {
+              if (d.x > 180) {
+                return "end"
+              }
+            })
+            .attr("transform", function(d) {
+              if (d.x < 180) {
+                var transformText = "translate(0)"
+                return transformText
+              } else {
+                var transformText = "rotate(180)translate(-20)";
+                return transformText
+              }
+            });
 
-      //update the nodes  ...
-      var node = svg.selectAll("g.node")
-          .data(nodes, function (d) {return d.id || (d.id = ++i); });
+        // Trying to make appropriate transforms, not perfect
+        var nodeExit = node.exit().transition()
+            .duration(duration)
+            //.attr("transform", function(d) { return "diagonal(" + source.y + "," + source.x + ")"; })
+            .remove();
 
-      //enter any new node at the parent's previous position.
-      var nodeEnter = node.enter().append("g")
-          .attr("class", "node")
-          //.attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-          .on("click", click);
+        nodeExit.select("circle")
+            .attr("r", 1e-6);
 
-      //adding circles to nodes
-      nodeEnter.append("circle")
-          .attr("r", 1e-6)
-          .style("fill", function(d) { return d._children ? "orange" : "#fff"; });
+        nodeExit.select("text")
+            .style("fill-opacity", 1e-6);
 
-      //adding text and setting attributes
-      nodeEnter.append("text")
-          .attr("x", 10 )
-          .attr("dy", ".35em")
-          .attr("text-anchor", "start")
-          .attr("transform", function(d) { return d.x < 180 ? "translate(-2)" : "rotate(360)translate(2)"; })
-          // .attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.name.length * 8.5)  + ")"; })
-          .text(function(d) { return d.name; })
-          .style("fill-opacity", 1e-6);
+        // Update the links between nodes…
+        var link = svg.selectAll("path.link")
+            .data(links, function(d) { return d.target.id; });
 
-      // Transition nodes to their new position.
-      var nodeUpdate = node.transition()
-          .duration(duration)
-          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+        // Enter any new links at the parent's previous position.
+        link.enter().insert("path", "g")
+            .attr("class", "link")
+            .attr("d", function(d) {
+              var o = {x: source.x0, y: source.y0};
+              return diagonal({source: o, target: o});
+            });
 
-      nodeUpdate.select("circle")
-          .attr("r", 1.5)
-          .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+        // Transition links to their new position.
+        link.transition()
+            .duration(duration)
+            .attr("d", diagonal);
 
-      //fixed text positioning so text on both sides of dendrogram appears correctly
-      nodeUpdate.select("text")
-          .style("fill-opacity", 1)
-          .attr("text-anchor", function(d) {
-            if (d.x > 180) {
-              return "end"
-            }
-          })
-          .attr("transform", function(d) {
-            if (d.x < 180) {
-              var transformText = "translate(0)"
-              return transformText
-            } else {
-              var transformText = "rotate(180)translate(-20)";
-              console.log(transformText)
-              return transformText
-            }
-          });
+        // Transition exiting nodes to the parent's new position.
+        link.exit().transition()
+            .duration(duration)
+            .attr("d", function(d) {
+              var o = {x: source.x, y: source.y};
+              return diagonal({source: o, target: o});
+            })
+            .remove();
 
-      // Trying to make appropriate transforms, not perfect
-      var nodeExit = node.exit().transition()
-          .duration(duration)
-          //.attr("transform", function(d) { return "diagonal(" + source.y + "," + source.x + ")"; })
-          .remove();
-
-      nodeExit.select("circle")
-          .attr("r", 1e-6);
-
-      nodeExit.select("text")
-          .style("fill-opacity", 1e-6);
-
-      // Update the links between nodes…
-      var link = svg.selectAll("path.link")
-          .data(links, function(d) { return d.target.id; });
-
-      // Enter any new links at the parent's previous position.
-      link.enter().insert("path", "g")
-          .attr("class", "link")
-          .attr("d", function(d) {
-            var o = {x: source.x0, y: source.y0};
-            return diagonal({source: o, target: o});
-          });
-
-      // Transition links to their new position.
-      link.transition()
-          .duration(duration)
-          .attr("d", diagonal);
-
-      // Transition exiting nodes to the parent's new position.
-      link.exit().transition()
-          .duration(duration)
-          .attr("d", function(d) {
-            var o = {x: source.x, y: source.y};
-            return diagonal({source: o, target: o});
-          })
-          .remove();
-
-      // Stash the old positions for transitions.
-      nodes.forEach(function(d) {
-        d.x0 = d.x;
-        d.y0 = d.y;
-      });
-    }
-
-  //functions D3 is using
-
-    // Toggle child nodes on click.
-    function click(d) {
-      if (d.children) {
-        d._children = d.children;
-        d.children = null;
-      } else {
-        d.children = d._children;
-        d._children = null;
+        // Stash the old positions for transitions.
+        nodes.forEach(function(d) {
+          d.x0 = d.x;
+          d.y0 = d.y;
+        });
       }
-      update(d);
-    }
 
-    // Collapse child nodes on click.
-    function collapse(d) {
-      if (d.children) {
+    //functions D3 is using
+
+      // Toggle child nodes on click.
+      function click(d) {
+        if (d.children) {
           d._children = d.children;
-          d._children.forEach(collapse);
           d.children = null;
-            }
-    }
-    });
-
-    $scope.$watch('vm.habitat', function(newVal, oldVal) {
-      console.log(newVal);
-      if (newVal) {
-        var selectedHabitat = newVal
-        var filterOptions = {
-          habitat: newVal
+        } else {
+          d.children = d._children;
+          d._children = null;
         }
-        // Select the nodes that match the filter and modify them
-        d3.selectAll('circle')
-          .transition()
-          .duration(150)
-          .attr("r", function(d) {
-            if  (matchFilter(d, filterOptions)) {
-              return 15
-            }
-            return 2
-          })
-        // Modify the appearance of the text as well
-        d3.selectAll('.node-name')
-          .transition()
-          .duration(150)
-          .style('opacity', function(d) {
-            if  (matchFilter(d, filterOptions)) {
-              return 1
-            }
-            return 0.1
-          })
+        update(d);
       }
-    })
-  }
 
-  function matchFilter(d, filterOptions) {
-   if (
-     d.habitat === filterOptions.habitat &&
-     true // put another criteria here
-   ) {
-     return true
+      // Collapse child nodes on click.
+      function collapse(d) {
+        if (d.children) {
+            d._children = d.children;
+            d._children.forEach(collapse);
+            d.children = null;
+              }
+      }
+      });
+
+      $scope.$watch('vm.habitat', function(newVal, oldVal) {
+        if (newVal) {
+          var selectedHabitat = newVal
+          var filterOptions = {
+            habitat: newVal
+          }
+          // Select the nodes that match the filter and modify them
+          d3.selectAll('circle')
+            .transition()
+            .duration(150)
+            .attr("r", function(d) {
+              if  (matchFilter(d, filterOptions)) {
+                return 15
+              }
+              return 2
+            })
+          // Modify the appearance of the text as well
+          d3.selectAll('.node-name')
+            .transition()
+            .duration(150)
+            .style('opacity', function(d) {
+              if  (matchFilter(d, filterOptions)) {
+                return 1
+              }
+              return 0.1
+            })
+        }
+      })
+    }
+
+    function matchFilter(d, filterOptions) {
+     if (
+       d.habitat === filterOptions.habitat &&
+       true // put another criteria here
+     ) {
+       return true
+     }
+     return false
    }
-   return false
- }
-
-})();
+  }
+})()
