@@ -11,6 +11,10 @@ function configRoutes($stateProvider, $urlRouterProvider) {
       url: '/bookmarks',
       templateUrl: 'app/bookmarks/bookmarks.html'
     })
-
+    .state('login',){
+      url: '/login',
+      templateUrl: 'app/auth/login.html'
+    }
+    
     $urlRouterProvider.otherwise('/')
 }
