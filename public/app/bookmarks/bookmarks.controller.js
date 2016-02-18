@@ -6,21 +6,13 @@ function bookmarksController($http, bookmarksService) {
   // console.log(bookmarksService.getBookmarks());
   bookmarksService.getBookmarks()
     .then(function(data) {
-      // console.log(data[0].title);
-      // console.log(data[0].notes);
-      // console.log(data[0].date);
-      // console.log(JSON.stringify(data[0]))
-      console.log(data[0])
-      // vm.bookmarks = [
-      //     {
-      //       title: "some title"
-      //     },
-      //     {
-      //       title: "another title"
-      //     }
-      //   ]
-
       vm.bookmarks = data
+      // If the user did not specify a title, generate one
+      vm.bookmarks.forEach(function(bookmark) {
+        if (!bookmark.title) {
+          bookmark.title = "Bookmark " + bookmark.id
+        }
+      })
     })
 
   vm.delete = function() {
