@@ -4,7 +4,7 @@ angular.module('app')
 function bookmarksService($http) {
   service = {
     getBookmarks: getBookmarks,
-    createBookmarks: createBookmarks,
+    createBookmark: createBookmark,
     deleteBookmark: deleteBookmark
   }
   return service
@@ -17,7 +17,17 @@ function bookmarksService($http) {
       })
   }
 
-  function createBookmarks() {}
+  function createBookmark(bookmark) {
+    console.log('creating bookmark in the factory: ', bookmark.search)
+    return $http({
+        method: 'POST',
+        url: 'http://twig-of-life.herokuapp.com/add_bookmark'
+      })
+      .then(function successCallback(response) {
+        console.log(response)
+      }, function errorCallback(response) {
+      })
+  }
 
   function deleteBookmark() {
     return $http.delete('http://whateverourserveriscalled')
