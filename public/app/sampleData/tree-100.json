@@ -448,7 +448,8 @@
     }]
   }, {
     "taxonRank": "class",
-    "name": "Ascidiacea",
+    "name": "
+    ",
     "children": [{
       "taxonRank": "order",
       "name": "Enterogona",

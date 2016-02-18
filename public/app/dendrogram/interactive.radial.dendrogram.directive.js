@@ -9,7 +9,8 @@
       template: '<div class="dendrogram"></div>',
       scope: {
         filter: '=',
-        habitat: '='
+        habitat: '=',
+        taxonrank: '='
       },
       link: drawTreeOfLife,
       controller: 'DendrogramController',
@@ -19,7 +20,7 @@
 
   function drawTreeOfLife($scope, $element, $attr){
     var filterOptions = {}
-    d3.json("app/sampleData/tree-100.json", function(error, data) {
+    d3.json("app/sampleData/tree-1000.json", function(error, data) {
       if (error) return console.warn(error);
 
     var tooltip = dendrogramService.initializeTooltip()
@@ -240,6 +241,19 @@
       // console.log('i can haz vm.filter:', newVal);
     })
 
+    $scope.$watch('vm.class', function (newVal, oldVaL) {
+      if (newVal) {
+        var selectedClass = newVal
+        filterOptions.class = newVal
+
+        //select the links of that class
+        d3.selectAll('link')
+          .transition()
+          .duration(150)
+          .style("stroke", "red")
+      }
+    })
+
     $scope.$watch('vm.habitat', function(newVal, oldVaL) {
       if (newVal) {
         var selectedHabitat = newVal
@@ -260,7 +274,7 @@
         d3.selectAll('.node-name')
           .transition()
           .duration(150)
-          .style('opacity', function(d) {
+          .style('fill', function(d) {
             if  (matchFilter(d, filterOptions)) {
               return dendrogramService.config.text.selectedOpacity
             }
@@ -268,6 +282,35 @@
           })
       }
     })
+
+    $scope.$watch('vm.taxonrank', function(newVal, oldVaL) {
+      if (newVal) {
+        var selectedTaxonRank = newVal
+        filterOptions.taxonRank = newVal
+        console.log("taxon rank changed", newVal)
+
+        // Select the nodes that match the filter and modify them
+        d3.selectAll('circle')
+          .transition()
+          .duration(150)
+          .attr("r", function(d) {
+            if  (matchFilter(d, filterOptions)) {
+              return dendrogramService.config.node.selectedSize
+            }
+            return dendrogramService.config.node.initialSize
+          })
+      }
+    })
+        // Modify the appearance of the text as well
+        d3.selectAll('.node-name')
+          .transition()
+          .duration(150)
+          .style('opacity', function(d) {
+            if  (matchFilter(d, filterOptions)) {
+              return dendrogramService.config.text.selectedOpacity
+            }
+            return dendrogramService.config.text.initialOpacity
+          })
 
     });
   }
@@ -277,9 +320,10 @@
   //  console.log(filterOptions);
    if (
      d.description === filterOptions.habitat |
+     d.taxonrank === filterOptions.taxonRank |
      d.name === filterOptions.filter
    ) {
-     console.log(d.name, filterOptions.filter);
+     console.log(d.name, filterOptions.taxonRank);
      return true
    }
    return false

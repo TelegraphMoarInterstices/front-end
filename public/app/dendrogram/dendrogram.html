@@ -2,7 +2,8 @@
 
   <interactiveradialdendrogram
     filter="dendrogram.filter"
-    habitat="dendrogram.habitat">
+    habitat="dendrogram.habitat"
+    taxonRank="dendrogram.taxonrank">
   </interactiveradialdendrogram>
 
   <div class="filter">
@@ -14,6 +15,25 @@
       <option value="pelagic">Pelagic</option>
       <option value="abyssal">Abyssal</option>
       <option value="bathyal">Bathyal</option>
+    </select>
+    <label for="taxonrank-filter">Taxon Level</label>
+    <select name="taxonrank-filter" ng-model="dendrogram.taxonrank">
+      <option value="phylum">Phylum</option>
+      <option value="class">Class</option>
+      <option value="order">Order</option>
+      <option value="family">Family</option>
+      <option value="genus">Genus</option>
+      <option value="species">Species</option>
+    </select>
+    <label for="class-filter">Class</label>
+    <select name="class-filter" ng-model="dendrogram.class">
+      <option value="Reptilia">Reptilia</option>
+      <option value="Mammalia">Mammalia</option>
+      <option value="Aves">Aves</option>
+      <option value="Amphibia">Amphibia</option>
+      <option value="Agnatha">Agnatha</option>
+      <option value="Osteichthyes">Osteichthyes</option>
+      <option value="Chondrichthyes">Chondrichthyes</option>
     </select>
   </div>
 

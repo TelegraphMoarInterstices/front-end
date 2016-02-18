@@ -7,5 +7,8 @@
     vm.data = 'whatever'
     vm.filter = ''
     vm.habitat = ''
+    vm.taxonrank = ''
+    vm.class = ''
+
   }
 })()
