@@ -322,10 +322,9 @@
      d.taxonRank === filterOptions.taxonRank
 
    ) {
-     console.log(d.taxonRank, filterOptions.taxonRank);
-
      return true
    }
+   console.log(d.taxonRank, filterOptions.taxonRank);
    return false
  }
 

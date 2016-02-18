@@ -234,11 +234,13 @@
 
     function matchFilter(d, filterOptions) {
      if (
-       d.habitat === filterOptions.habitat &&
+      //  d.habitat === filterOptions.habitat
+       d.taxonrank === filterOptions.taxonRank
        true // put another criteria here
      ) {
        return true
      }
+     console.log(d.taxonrank)
      return false
    }
   }
