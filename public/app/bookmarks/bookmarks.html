@@ -1,10 +1,10 @@
 <div class="bookmarks-view" ng-controller="bookmarksController as bookmarks">
   <h2>Bookmarks</h2>
-  
+
   <div class="bookmark" ng-repeat="bookmark in bookmarks.bookmarks">
     <span><a href="#">View</a></span>
     <span><a href="#">Delete</a></span>
-    <span>{{ bookmark }}</span>
+    <span>{{ bookmark.description }}</span>
   </div>
 
 </div>

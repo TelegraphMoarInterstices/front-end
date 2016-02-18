@@ -1,7 +1,7 @@
 angular.module('app')
-.factory('bookmarksService', bookmarksService)
+.factory('bookmarksService', ['$http', bookmarksService])
 
-function bookmarksService() {
+function bookmarksService($http) {
   service = {
     getBookmarks: getBookmarks,
     createBookmarks: createBookmarks
@@ -10,9 +10,12 @@ function bookmarksService() {
 
   /*** Implementation ***/
   function getBookmarks() {
-    return ['one', 'two', 'three']
+    return $http.get('./app/bookmarks/bookmarks.json')
+      .then(function(data){
+        return data.data
+      })
   }
 
   function createBookmarks() {}
-  
+
 }

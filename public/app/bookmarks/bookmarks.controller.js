@@ -1,7 +1,11 @@
 angular.module('app')
-.controller('bookmarksController', ['bookmarksService', bookmarksController])
+.controller('bookmarksController', ['$http', 'bookmarksService', bookmarksController])
 
-function bookmarksController(bookmarksService) {
+function bookmarksController($http, bookmarksService) {
   var vm = this
-  vm.bookmarks = bookmarksService.getBookmarks()
+  // console.log(bookmarksService.getBookmarks());
+  bookmarksService.getBookmarks()
+    .then(function(data) {
+      vm.bookmarks = data
+    })
 }
