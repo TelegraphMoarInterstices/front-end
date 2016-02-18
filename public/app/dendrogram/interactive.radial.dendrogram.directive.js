@@ -35,6 +35,7 @@
     // var diameter = $(".interactiveradialdendrogram").width();
 
     var diameter = dendrogramService.config.diameter;
+    var multiplier = dendrogramService.config.multiplier;
 
 
 
@@ -53,7 +54,7 @@
     //diameter along with the relationships between nodes
     var tree = d3.layout.tree()
         .size([360, diameter / 1-10])
-        .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+        .separation(function(a, b) { return (a.parent == b.parent ? 1 : multiplier) / a.depth; });
 
     //sets the diagonoal projection for the dendrogram
     var diagonal = d3.svg.diagonal.radial()
@@ -90,7 +91,7 @@
           links = tree.links(nodes);
 
       //normalize fixed-depth for each node, magically!
-      nodes.forEach(function(d) { d.y = d.depth * 50; });
+      nodes.forEach(function(d) { d.y = d.depth * multiplier; });
 
       //update the nodes  ...
       var node = svg.selectAll("g.node")

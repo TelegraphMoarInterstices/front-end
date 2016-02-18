@@ -5,7 +5,8 @@
   function dendrogramService() {
 
     var config = {
-      diameter: 900
+      diameter: 900,
+      multiplier: 2
     }
 
 
