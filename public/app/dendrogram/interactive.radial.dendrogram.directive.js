@@ -17,16 +17,13 @@
       bindToController: true
     }
 
-
-
   function drawTreeOfLife($scope, $element, $attr){
+    var filterOptions = {}
     //Inititalization
     //have to put this in here for the time being, need to figure out JSON/XML question
     /***** Execution ****/
     d3.json("app/sampleData/tree-100.json", function(error, data) {
       if (error) return console.warn(error);
-      console.log(data)
-
 
     //tooltip
     // var tooltip = dendrogramService.initializeTooltip()
@@ -104,7 +101,7 @@
 
       //adding circles to nodes
       nodeEnter.append("circle")
-          .attr("r", 1e-6)
+          .attr("r", dendrogramService.config.node.initialSize)
           .style("fill", function(d) { return d._children ? "orange" : "#fff"; });
 
       //adding text and setting attributes
@@ -115,7 +112,9 @@
           .attr("transform", function(d) { return d.x < 180 ? "translate(-2)" : "rotate(360)translate(2)"; })
           // .attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.name.length * 8.5)  + ")"; })
           .text(function(d) { return d.name; })
-          .style("fill-opacity", 1e-6);
+          .style('opacity', dendrogramService.config.text.initialOpacity)
+          .style("fill-opacity", 1e-6)
+          .attr('class', 'node-name')
 
       // Transition nodes to their new position.
       var nodeUpdate = node.transition()
@@ -124,7 +123,7 @@
 
       //setting node styling to differentiate between nodes that have more information contained within it them
       nodeUpdate.select("circle")
-          .attr("r", 3.4)
+          .attr("r", dendrogramService.config.node.initialSize)
           .style("fill", function(d) { return d._children ? "slategray" : "white"; });
 
       //fixed text positioning so text on both sides of dendrogram appears correctly
@@ -141,7 +140,6 @@
               return transformText
             } else {
               var transformText = "rotate(180)translate(-20)";
-              console.log(transformText)
               return transformText
             }
           });
@@ -153,7 +151,7 @@
           .remove();
 
       nodeExit.select("circle")
-          .attr("r", 1e-6);
+          .attr("r", dendrogramService.config.node.initialSize);
 
       nodeExit.select("text")
           .style("fill-opacity", 1e-6);
@@ -195,6 +193,7 @@
 
     // Toggle child nodes on click.
     function click(d) {
+      console.log(d);
       if (d.children) {
         d._children = d.children;
         d.children = null;
@@ -214,11 +213,54 @@
             }
     }
 
+    // How to watch more than one thing at once?
+    $scope.$watch('vm.filter', function(newVal, oldVaL) {
+      // console.log('i can haz vm.filter:', newVal);
+    })
+
     $scope.$watch('vm.habitat', function(newVal, oldVaL) {
-      console.log(newVal)
+      if (newVal) {
+        var selectedHabitat = newVal
+        filterOptions.habitat = newVal
+
+        // Select the nodes that match the filter and modify them
+        d3.selectAll('circle')
+          .transition()
+          .duration(150)
+          .attr("r", function(d) {
+            if  (matchFilter(d, filterOptions)) {
+              return dendrogramService.config.node.selectedSize
+            }
+            return dendrogramService.config.node.initialSize
+          })
+
+        // Modify the appearance of the text as well
+        d3.selectAll('.node-name')
+          .transition()
+          .duration(150)
+          .style('opacity', function(d) {
+            if  (matchFilter(d, filterOptions)) {
+              return dendrogramService.config.text.selectedOpacity
+            }
+            return dendrogramService.config.text.initialOpacity
+          })
+      }
     })
 
     });
   }
  }
+
+ function matchFilter(d, filterOptions) {
+  //  console.log(filterOptions);
+   if (
+     d.description === filterOptions.habitat |
+     d.name === filterOptions.filter
+   ) {
+     console.log(d.name, filterOptions.filter);
+     return true
+   }
+   return false
+ }
+
 })();

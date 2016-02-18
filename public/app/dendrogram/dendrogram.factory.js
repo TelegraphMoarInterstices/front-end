@@ -5,7 +5,15 @@
   function dendrogramService() {
     // Config puts the tweakable parameters in one easy-to-deal-with spot
     var config = {
-      diameter: 900
+      diameter: 900,
+      text: {
+        initialOpacity: 0.3,
+        selectedOpacity: 0.8
+      },
+      node: {
+        initialSize: 2,
+        selectedSize: 10
+      }
     }
     var service = {
       config: config,
