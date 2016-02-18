@@ -19,21 +19,11 @@
 
   function drawTreeOfLife($scope, $element, $attr){
     var filterOptions = {}
-    //Inititalization
-    //have to put this in here for the time being, need to figure out JSON/XML question
-    /***** Execution ****/
     d3.json("app/sampleData/tree-100.json", function(error, data) {
       if (error) return console.warn(error);
 
-    //tooltip
-    // var tooltip = dendrogramService.initializeTooltip()
-
-    //setting diameter variable
-    // var diameter = $(".interactiveradialdendrogram").width();
-
+    var tooltip = dendrogramService.initializeTooltip()
     var diameter = dendrogramService.config.diameter;
-
-
 
     //convention with d3 seems to be to set margins as well
     var margin = {top: 2, right: 2, bottom: 2, left: 2},
@@ -44,7 +34,6 @@
     var i = 0,
         duration = 350,
         root;
-
 
     //this is the where the tree shap is created with size being a fraction of
     //diameter along with the relationships between nodes
@@ -97,7 +86,9 @@
       var nodeEnter = node.enter().append("g")
           .attr("class", "node")
           //.attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-          .on("click", click);
+          // .on("click", click)
+          .on("mouseover", showTooltip)
+          .on('mouseout', hideTooltip)
 
       //adding circles to nodes
       nodeEnter.append("circle")
@@ -124,7 +115,7 @@
       //setting node styling to differentiate between nodes that have more information contained within it them
       nodeUpdate.select("circle")
           .attr("r", dendrogramService.config.node.initialSize)
-          .style("fill", function(d) { return d._children ? "slategray" : "white"; });
+          .style("fill", function(d) { return d._children ? "slategray" : "white"; })
 
       //fixed text positioning so text on both sides of dendrogram appears correctly
       nodeUpdate.select("text")
@@ -193,7 +184,6 @@
 
     // Toggle child nodes on click.
     function click(d) {
-      console.log(d);
       if (d.children) {
         d._children = d.children;
         d.children = null;
@@ -202,6 +192,37 @@
         d._children = null;
       }
       update(d);
+    }
+
+    function showTooltip(d) {
+      if (d.taxonRank === 'species') {
+        tooltip
+        .transition()
+        .duration(500)
+        .style("opacity", 0.9);
+        tooltip
+        .html(
+          "<h3>" +
+          d.name +
+          "</h3>" +
+          "<p>" +
+          d.description +
+          "</p>" +
+          "<div>" +
+          '<img src="http://lorempixel.com/100/100/animals/">' +
+          '</div>'
+        )
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px")
+      }
+    }
+
+    function hideTooltip() {
+      console.log('out');
+      tooltip
+        .transition()
+        .duration(1000)
+        .style("opacity", 0);
     }
 
     // Collapse child nodes on click.

@@ -11,8 +11,8 @@
         selectedOpacity: 0.8
       },
       node: {
-        initialSize: 2,
-        selectedSize: 10
+        initialSize: 5,
+        selectedSize: 15
       }
     }
     var service = {
@@ -59,7 +59,7 @@
     function initializeTooltip() {
       return d3.select("body").append("div")
        .attr("class", "tooltip")
-       .style("opacity", 0);
+       .style("opacity", 0)
     }
   }
 })()
