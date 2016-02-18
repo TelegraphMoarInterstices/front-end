@@ -7,14 +7,19 @@
     vm.data = 'whatever'
     vm.filter = ''
     vm.habitat = ''
+    vm.showBookmarkForm = false
+
     vm.createBookmark = function() {
+      vm.showBookmarkForm = false
       // Several values are temporarily hardcoded
       var bookmark = {
         user_id: 1,
+        title: this.bookmarkTitle,
+        notes: this.bookmarkNote,
         search: {
-          habitat: this.habitat
-        },
-        notes: "This is a note on the bookmark."
+          habitat: this.habitat,
+          class: ['reptiles', 'birds']
+        }
       }
       bookmarksService.createBookmark(bookmark)
     }

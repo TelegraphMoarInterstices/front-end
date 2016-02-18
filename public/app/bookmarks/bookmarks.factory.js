@@ -18,14 +18,15 @@ function bookmarksService($http) {
   }
 
   function createBookmark(bookmark) {
-    console.log('creating bookmark in the factory: ', bookmark.search)
+    console.log('creating bookmark in the factory: ', bookmark)
     return $http({
         method: 'POST',
-        url: 'http://twig-of-life.herokuapp.com/add_bookmark'
+        url: 'https://twig-of-life.herokuapp.com/add_bookmark'
       })
       .then(function successCallback(response) {
-        console.log(response)
+        console.log('Successfully saved bookmark: ', response)
       }, function errorCallback(response) {
+        console.log('Error saving bookmark: ', response);
       })
   }
 
