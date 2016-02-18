@@ -11,22 +11,23 @@
     <h2>Filter</h2>
     <label for="habitat-filter">Habitat</label>
     <select name="habitat-filter" ng-model="dendrogram.habitat">
-      <option value="pelagic">Pelagic</option>
-      <option value="abyssal">Abyssal</option>
-      <option value="bathyal">Bathyal</option>
+      <option value="pelagic">pelagic</option>
+      <option value="abyssal">abyssal</option>
+      <option value="bathyal">bathyal</option>
     </select>
     <label for="taxonrank-filter">Taxon Level</label>
     <select name="taxonrank-filter" ng-model="dendrogram.taxonRank">
-      <option value="phylum">Phylum</option>
-      <option value="class">Class</option>
-      <option value="order">Order</option>
-      <option value="family">Family</option>
-      <option value="genus">Genus</option>
-      <option value="species">Species</option>
+      <option value="phylum">phylum</option>
+      <option value="class">class</option>
+      <option value="order">order</option>
+      <option value="family">family</option>
+      <option value="genus">genus</option>
+      <option value="species">species</option>
     </select>
     <label for="classtype-filter">Class</label>
     <select name="classtype-filter" ng-model="dendrogram.classType">
-      <option value="reptilia">Reptilia</option>
+      <option value="reptilia">reptilia</option>
+      <option value="mammalia">mammalia</option>
     </select>
     <div class="bookmark">
       <button ng-click="dendrogram.showBookmarkForm = !dendrogram.showBookmarkForm" type="button" name="showBookmarkForm" ng-show="!dendrogram.showBookmarkForm">Bookmark</button>
