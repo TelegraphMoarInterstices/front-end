@@ -5,14 +5,10 @@
     <span ng-show="!showInfo"><a ng-click="showInfo = !showInfo">View details</a></span>
     <span ng-show="showInfo"><a ng-click="showInfo = !showInfo">Hide details</a></span>
     <span ng-click="bookmarks.delete()">Delete</span>
-    <span>{{ bookmark.description }}</span>
+    <span>{{ bookmark.title }}</span>
     <div ng-show="showInfo">
-      <p>
-        <strong>Habitat: </strong> {{bookmark.characterstics.habitat[0]}}
-      </p>
-      <p>
-        <strong>Diet: </strong>{{bookmark.characterstics.diet}}
-      </p>
+      <p><strong>Notes: </strong>{{ bookmark.notes }}</p>
+      <p><strong>Created: </strong>{{ bookmark.date | date }}</p>
     </div>
   </div>
   <div>
