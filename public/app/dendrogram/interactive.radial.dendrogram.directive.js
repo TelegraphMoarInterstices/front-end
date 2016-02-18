@@ -17,26 +17,13 @@
       bindToController: true
     }
 
-
-
   function drawTreeOfLife($scope, $element, $attr){
-    //Inititalization
-    //have to put this in here for the time being, need to figure out JSON/XML question
-    /***** Execution ****/
+    var filterOptions = {}
     d3.json("app/sampleData/tree-100.json", function(error, data) {
       if (error) return console.warn(error);
-      console.log(data)
 
-
-    //tooltip
-    // var tooltip = dendrogramService.initializeTooltip()
-
-    //setting diameter variable
-    // var diameter = $(".interactiveradialdendrogram").width();
-
+    var tooltip = dendrogramService.initializeTooltip()
     var diameter = dendrogramService.config.diameter;
-
-
 
     //convention with d3 seems to be to set margins as well
     var margin = {top: 2, right: 2, bottom: 2, left: 2},
@@ -47,7 +34,6 @@
     var i = 0,
         duration = 350,
         root;
-
 
     //this is the where the tree shap is created with size being a fraction of
     //diameter along with the relationships between nodes
@@ -100,11 +86,13 @@
       var nodeEnter = node.enter().append("g")
           .attr("class", "node")
           //.attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-          .on("click", click);
+          .on("click", click)
+          .on("mouseover", showTooltip)
+          .on('mouseout', hideTooltip)
 
       //adding circles to nodes
       nodeEnter.append("circle")
-          .attr("r", 1e-6)
+          .attr("r", dendrogramService.config.node.initialSize)
           .style("fill", function(d) { return d._children ? "orange" : "#fff"; });
 
       //adding text and setting attributes
@@ -115,7 +103,9 @@
           .attr("transform", function(d) { return d.x < 180 ? "translate(-2)" : "rotate(360)translate(2)"; })
           // .attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.name.length * 8.5)  + ")"; })
           .text(function(d) { return d.name; })
-          .style("fill-opacity", 1e-6);
+          .style('opacity', dendrogramService.config.text.initialOpacity)
+          .style("fill-opacity", 1e-6)
+          .attr('class', 'node-name')
 
       // Transition nodes to their new position.
       var nodeUpdate = node.transition()
@@ -124,8 +114,8 @@
 
       //setting node styling to differentiate between nodes that have more information contained within it them
       nodeUpdate.select("circle")
-          .attr("r", 3.4)
-          .style("fill", function(d) { return d._children ? "slategray" : "white"; });
+          .attr("r", dendrogramService.config.node.initialSize)
+          .style("fill", function(d) { return d._children ? "slategray" : "white"; })
 
       //fixed text positioning so text on both sides of dendrogram appears correctly
       nodeUpdate.select("text")
@@ -141,7 +131,6 @@
               return transformText
             } else {
               var transformText = "rotate(180)translate(-20)";
-              console.log(transformText)
               return transformText
             }
           });
@@ -153,7 +142,7 @@
           .remove();
 
       nodeExit.select("circle")
-          .attr("r", 1e-6);
+          .attr("r", dendrogramService.config.node.initialSize);
 
       nodeExit.select("text")
           .style("fill-opacity", 1e-6);
@@ -205,6 +194,37 @@
       update(d);
     }
 
+    function showTooltip(d) {
+      if (d.taxonRank === 'species') {
+        tooltip
+        .transition()
+        .duration(500)
+        .style("opacity", 0.9);
+        tooltip
+        .html(
+          "<h3>" +
+          d.name +
+          "</h3>" +
+          "<p>" +
+          d.description +
+          "</p>" +
+          "<div>" +
+          '<img src="http://lorempixel.com/100/100/animals/">' +
+          '</div>'
+        )
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px")
+      }
+    }
+
+    function hideTooltip() {
+      console.log('out');
+      tooltip
+        .transition()
+        .duration(1000)
+        .style("opacity", 0);
+    }
+
     // Collapse child nodes on click.
     function collapse(d) {
       if (d.children) {
@@ -214,11 +234,54 @@
             }
     }
 
+    // How to watch more than one thing at once?
+    $scope.$watch('vm.filter', function(newVal, oldVaL) {
+      // console.log('i can haz vm.filter:', newVal);
+    })
+
     $scope.$watch('vm.habitat', function(newVal, oldVaL) {
-      console.log(newVal)
+      if (newVal) {
+        var selectedHabitat = newVal
+        filterOptions.habitat = newVal
+
+        // Select the nodes that match the filter and modify them
+        d3.selectAll('circle')
+          .transition()
+          .duration(150)
+          .attr("r", function(d) {
+            if  (matchFilter(d, filterOptions)) {
+              return dendrogramService.config.node.selectedSize
+            }
+            return dendrogramService.config.node.initialSize
+          })
+
+        // Modify the appearance of the text as well
+        d3.selectAll('.node-name')
+          .transition()
+          .duration(150)
+          .style('opacity', function(d) {
+            if  (matchFilter(d, filterOptions)) {
+              return dendrogramService.config.text.selectedOpacity
+            }
+            return dendrogramService.config.text.initialOpacity
+          })
+      }
     })
 
     });
   }
  }
+
+ function matchFilter(d, filterOptions) {
+  //  console.log(filterOptions);
+   if (
+     d.description === filterOptions.habitat |
+     d.name === filterOptions.filter
+   ) {
+     console.log(d.name, filterOptions.filter);
+     return true
+   }
+   return false
+ }
+
 })();
