@@ -122,6 +122,7 @@
       //fixed text positioning so text on both sides of dendrogram appears correctly
       nodeUpdate.select("text")
           .style("fill-opacity", 1)
+          .style("color", "black")
           .attr("text-anchor", function(d) {
             if (d.x > 180) {
               return "end"
@@ -236,11 +237,6 @@
             }
     }
 
-    // How to watch more than one thing at once?
-    $scope.$watch('vm.filter', function(newVal, oldVaL) {
-      // console.log('i can haz vm.filter:', newVal);
-    })
-
     $scope.$watch('vm.class', function (newVal, oldVaL) {
       if (newVal) {
         var selectedClass = newVal
@@ -309,6 +305,33 @@
             }
             return dendrogramService.config.text.initialOpacity
           })
+    $scope.$watch('vm.classtype', function(newVal, oldVaL) {
+      if (newVal) {
+        filterOptions.classType = newVal
+        console.log("the class has changed", newVal)
+
+        // Select the nodes that match the filter and modify them
+        d3.selectAll('circle')
+          .transition()
+          .duration(150)
+          .attr("r", function(d) {
+            if  (matchFilter(d, filterOptions)) {
+              return dendrogramService.config.node.selectedSize
+            }
+            return dendrogramService.config.node.initialSize
+          })
+      }
+    })
+        // Modify the appearance of the text as well
+        d3.selectAll('.node-name')
+          .transition()
+          .duration(150)
+          .style('opacity', function(d) {
+            if  (matchFilter(d, filterOptions)) {
+              return dendrogramService.config.text.selectedOpacity
+            }
+            return dendrogramService.config.text.initialOpacity
+          })
 
     });
   }
@@ -318,11 +341,12 @@
   //  console.log(filterOptions);
    if (
      d.description === filterOptions.habitat |
-     d.taxonRank === filterOptions.taxonRank
+     d.taxonRank === filterOptions.taxonRank |
+     d.name === filterOptions.classType
    ) {
      return true
    }
-   console.log(d.taxonRank, filterOptions.taxonRank);
+   console.log(filterOptions.classType);
    return false
  }
 

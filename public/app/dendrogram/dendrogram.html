@@ -3,7 +3,8 @@
   <interactiveradialdendrogram
     filter="dendrogram.filter"
     habitat="dendrogram.habitat"
-    taxonRank="dendrogram.taxonRank">
+    taxonrank="dendrogram.taxonRank"
+    classtype="dendrogram.classType">
   </interactiveradialdendrogram>
 
   <div class="filter">
@@ -22,6 +23,10 @@
       <option value="family">Family</option>
       <option value="genus">Genus</option>
       <option value="species">Species</option>
+    </select>
+    <label for="classtype-filter">Class</label>
+    <select name="classtype-filter" ng-model="dendrogram.classType">
+      <option value="reptilia">Reptilia</option>
     </select>
     <div class="bookmark">
       <button ng-click="dendrogram.showBookmarkForm = !dendrogram.showBookmarkForm" type="button" name="showBookmarkForm" ng-show="!dendrogram.showBookmarkForm">Bookmark</button>
