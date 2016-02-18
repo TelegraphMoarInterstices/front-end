@@ -9,7 +9,7 @@
     <span>{{ bookmark.search }}</span>
     <div ng-show="showInfo">
       <p><strong>Notes: </strong>{{ bookmark.notes }}</p>
-      <p><strong>Date created: </strong>{{ bookmark.date }}</p>
+      <p><strong>Created: </strong>{{ bookmark.date | date }}</p>
     </div>
   </div>
   <div>
