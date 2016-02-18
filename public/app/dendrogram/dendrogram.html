@@ -1,13 +1,12 @@
 <div class="dendrogram-view" ng-controller="DendrogramController as dendrogram">
 
-  <dendrogram2
+  <interactiveradialdendrogram
     filter="dendrogram.filter"
     habitat="dendrogram.habitat">
-  </dendrogram2>
-  
+  </interactiveradialdendrogram>
+
   <div class="filter">
     <h2>Filter</h2>
-
     <select ng-model="dendrogram.habitat">
       <option value="ocean">Ocean</option>
       <option value="jungle">Jungle</option>

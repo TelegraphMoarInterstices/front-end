@@ -1,39 +1,45 @@
 (function(){
   angular.module('app')
-  .directive('interactiveradialdendrogram', [dendrogram])
+  .directive('interactiveradialdendrogram', [ "dendrogramService", dendrogram] )
 
-  function dendrogram() {
+  function dendrogram(dendrogramService) {
     return {
       restrict: 'E',
       replace: true,
       template: '<div class="dendrogram"></div>',
       scope: {
-        data: '='
+        filter: '=',
+        habitat: '='
       },
       link: drawTreeOfLife,
       controller: 'DendrogramController',
       controllerAs: 'vm',
       bindToController: true
     }
-  }
+
 
 
   function drawTreeOfLife($scope, $element, $attr){
     //Inititalization
-
     //have to put this in here for the time being, need to figure out JSON/XML question
     /***** Execution ****/
-    d3.json("./treeData2.json", function(error, data) {
+    d3.json("app/sampleData/tree-100.json", function(error, data) {
       if (error) return console.warn(error);
+      console.log(data)
+
 
     //tooltip
     // var tooltip = dendrogramService.initializeTooltip()
 
     //setting diameter variable
-    var diameter = 900;
+    // var diameter = $(".interactiveradialdendrogram").width();
+
+    var diameter = dendrogramService.config.diameter;
+
+
 
     //convention with d3 seems to be to set margins as well
-    var margin = {top: 20, right: 10, bottom: 20, left: 10},
+    var margin = {top: 2, right: 2, bottom: 2, left: 2},
         width = diameter,
         height = diameter;
 
@@ -46,7 +52,7 @@
     //this is the where the tree shap is created with size being a fraction of
     //diameter along with the relationships between nodes
     var tree = d3.layout.tree()
-        .size([360, diameter / 1-120])
+        .size([360, diameter / 1-10])
         .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
     //sets the diagonoal projection for the dendrogram
@@ -58,12 +64,12 @@
         .attr("width", width)
         .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + diameter / 3 + "," + diameter / 2.8 + ")");
+        .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
     //we need to set root equal to a variable, in my working example var life = a
     //big XML of data, need to figure out how to pull this from a JSON
     root = data;
-
+//we think this needs to change
     root.x0 = height / 2;
     root.y0 = 0;
 
@@ -84,7 +90,7 @@
           links = tree.links(nodes);
 
       //normalize fixed-depth for each node, magically!
-      nodes.forEach(function(d) { d.y = d.depth * 80; });
+      nodes.forEach(function(d) { d.y = d.depth * 50; });
 
       //update the nodes  ...
       var node = svg.selectAll("g.node")
@@ -116,9 +122,10 @@
           .duration(duration)
           .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
 
+      //setting node styling to differentiate between nodes that have more information contained within it them
       nodeUpdate.select("circle")
-          .attr("r", 1.5)
-          .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+          .attr("r", 3.4)
+          .style("fill", function(d) { return d._children ? "slategray" : "white"; });
 
       //fixed text positioning so text on both sides of dendrogram appears correctly
       nodeUpdate.select("text")
@@ -206,7 +213,12 @@
           d.children = null;
             }
     }
+
+    $scope.$watch('vm.habitat', function(newVal, oldVaL) {
+      console.log(newVal)
+    })
+
     });
   }
-
+ }
 })();
