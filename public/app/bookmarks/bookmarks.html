@@ -4,7 +4,7 @@
   <div class="bookmark" ng-repeat="bookmark in bookmarks.bookmarks">
     <span ng-show="!showInfo"><a ng-click="showInfo = !showInfo">View details</a></span>
     <span ng-show="showInfo"><a ng-click="showInfo = !showInfo">Hide details</a></span>
-    <span><a href="#">Delete</a></span>
+    <span ng-click="bookmarks.delete()">Delete</span>
     <span>{{ bookmark.description }}</span>
     <div ng-show="showInfo">
       <p>
@@ -14,6 +14,9 @@
         <strong>Diet: </strong>{{bookmark.characterstics.diet}}
       </p>
     </div>
+  </div>
+  <div>
+    {{ bookmarks.message }}
   </div>
 
 </div>

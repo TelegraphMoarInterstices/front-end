@@ -8,4 +8,15 @@ function bookmarksController($http, bookmarksService) {
     .then(function(data) {
       vm.bookmarks = data
     })
+
+  vm.delete = function() {
+    console.log('dleeete.');
+    bookmarksService.deleteBookmark()
+      .then(function(result) {
+        vm.message = 'Deleted'
+      })
+      .catch(function(error) {
+        vm.message = 'Could not delete!'  
+      })
+  }
 }

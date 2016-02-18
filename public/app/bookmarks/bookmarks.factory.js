@@ -4,7 +4,8 @@ angular.module('app')
 function bookmarksService($http) {
   service = {
     getBookmarks: getBookmarks,
-    createBookmarks: createBookmarks
+    createBookmarks: createBookmarks,
+    deleteBookmark: deleteBookmark
   }
   return service
 
@@ -18,4 +19,10 @@ function bookmarksService($http) {
 
   function createBookmarks() {}
 
+  function deleteBookmark() {
+    return $http.delete('http://whateverourserveriscalled')
+      .then(function(result) {
+        return result
+      })
+  }
 }
