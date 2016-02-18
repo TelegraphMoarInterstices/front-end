@@ -6,7 +6,6 @@
     <span ng-show="showInfo"><a ng-click="showInfo = !showInfo">Hide details</a></span>
     <span ng-click="bookmarks.delete()">Delete</span>
     <span>{{ bookmark.title }}</span>
-    <span>{{ bookmark.search }}</span>
     <div ng-show="showInfo">
       <p><strong>Notes: </strong>{{ bookmark.notes }}</p>
       <p><strong>Created: </strong>{{ bookmark.date | date }}</p>
