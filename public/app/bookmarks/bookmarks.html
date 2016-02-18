@@ -2,9 +2,17 @@
   <h2>Bookmarks</h2>
 
   <div class="bookmark" ng-repeat="bookmark in bookmarks.bookmarks">
-    <span><a href="#">View</a></span>
+    <span><a ng-click="showInfo = !showInfo">View</a></span>
     <span><a href="#">Delete</a></span>
     <span>{{ bookmark.description }}</span>
+    <div ng-show="showInfo">
+      <p>
+        <strong>Habitat: </strong> {{bookmark.characterstics.habitat[0]}}
+      </p>
+      <p>
+        <strong>Diet: </strong>{{bookmark.characterstics.diet}}  
+      </p>
+    </div>
   </div>
 
 </div>
