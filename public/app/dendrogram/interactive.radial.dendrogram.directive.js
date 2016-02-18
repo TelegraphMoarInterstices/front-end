@@ -256,7 +256,6 @@
 
     $scope.$watch('vm.habitat', function(newVal, oldVaL) {
       if (newVal) {
-        var selectedHabitat = newVal
         filterOptions.habitat = newVal
 
         // Select the nodes that match the filter and modify them
@@ -320,7 +319,6 @@
    if (
      d.description === filterOptions.habitat |
      d.taxonRank === filterOptions.taxonRank
-
    ) {
      return true
    }
