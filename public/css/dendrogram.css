@@ -7,11 +7,10 @@
 }
 
 .filter {
-  flex: 1;
-  background: #888;
-  color: #ddd;
-  padding: 30px;
-  height: 400px;
+  position: relative;
+  text-align: right;
+  /*right: 30px;*/
+  top: 100px;
 }
 
 .link {
@@ -46,4 +45,35 @@ div.tooltip {
 div.tooltip img {
   border-radius: 50%;
   margin: 5px;
+}
+
+.search-filter {
+  margin-bottom: 6px;
+  width: 100px;
+
+}
+
+.dendro-pos {
+  position: relative;
+  top: -100px;
+}
+
+.styled-select {
+   width: 100px;
+   height: 25px;
+   overflow: hidden;
+   border: 1px solid #ccc;
+   border-radius: 0;
+}
+
+.styled-select select {
+   background: transparent;
+   width: 268px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
 }
