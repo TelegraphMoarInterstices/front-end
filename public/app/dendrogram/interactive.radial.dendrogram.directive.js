@@ -86,7 +86,7 @@
       var nodeEnter = node.enter().append("g")
           .attr("class", "node")
           //.attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-          // .on("click", click)
+          .on("click", click)
           .on("mouseover", showTooltip)
           .on('mouseout', hideTooltip)
 
