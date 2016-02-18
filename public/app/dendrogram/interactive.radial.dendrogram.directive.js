@@ -319,10 +319,11 @@
   //  console.log(filterOptions);
    if (
      d.description === filterOptions.habitat |
-     d.taxonRank === filterOptions.taxonRank 
+     d.taxonRank === filterOptions.taxonRank
 
    ) {
      console.log(d.taxonRank, filterOptions.taxonRank);
+
      return true
    }
    return false

@@ -8,8 +8,6 @@
 
   <div class="filter">
     <h2>Filter</h2>
-    <label for="dendrogram-filter">Search</label>
-    <input name="dendrogram-filter" ng-model="dendrogram.filter">
     <label for="habitat-filter">Habitat</label>
     <select name="habitat-filter" ng-model="dendrogram.habitat">
       <option value="pelagic">Pelagic</option>
@@ -25,16 +23,21 @@
       <option value="genus">Genus</option>
       <option value="species">Species</option>
     </select>
-    <!-- <label for="class-filter">Class</label>
-    <select name="class-filter" ng-model="dendrogram.class">
-      <option value="Reptilia">Reptilia</option>
-      <option value="Mammalia">Mammalia</option>
-      <option value="Aves">Aves</option>
-      <option value="Amphibia">Amphibia</option>
-      <option value="Agnatha">Agnatha</option>
-      <option value="Osteichthyes">Osteichthyes</option>
-      <option value="Chondrichthyes">Chondrichthyes</option>
-    </select> -->
+    <div class="bookmark">
+      <button ng-click="dendrogram.showBookmarkForm = !dendrogram.showBookmarkForm" type="button" name="showBookmarkForm" ng-show="!dendrogram.showBookmarkForm">Bookmark</button>
+      <div class="bookmark-form" ng-show="dendrogram.showBookmarkForm">
+        <h3>Your bookmark</h3>
+        <p>
+          Habitat: {{ dendrogram.habitat }}
+        </p>
+        <p>
+          Classes: 'Reptiles, Birds'
+        </p>
+        <input name="bookmark-title" placeholder="Title..." ng-model="dendrogram.bookmarkTitle">
+        <input name="bookmark-note" placeholder="Notes..." ng-model="dendrogram.bookmarkNote">
+        <button ng-click="dendrogram.createBookmark()" type="button" name="bookmark-button">Save Bookmark</button>
+      </div>
+    </div>
   </div>
 
 </div>
