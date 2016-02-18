@@ -6,9 +6,8 @@
     // Config puts the tweakable parameters in one easy-to-deal-with spot
     var config = {
       diameter: 900,
-<<<<<<< HEAD
       multiplier: 2
-=======
+
       text: {
         initialOpacity: 0.3,
         selectedOpacity: 0.8
@@ -24,7 +23,6 @@
       initializeTree: initializeTree,
       diagonal: diagonal,
       initializeTooltip: initializeTooltip
->>>>>>> 0638eb3030daff96669117c4ffd0e05219d94db2
     }
 
     return service
