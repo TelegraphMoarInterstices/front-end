@@ -285,7 +285,6 @@
 
     $scope.$watch('vm.taxonrank', function(newVal, oldVaL) {
       if (newVal) {
-        var selectedTaxonRank = newVal
         filterOptions.taxonRank = newVal
         console.log("taxon rank changed", newVal)
 
@@ -320,10 +319,10 @@
   //  console.log(filterOptions);
    if (
      d.description === filterOptions.habitat |
-     d.taxonrank === filterOptions.taxonRank |
-     d.name === filterOptions.filter
+     d.taxonRank === filterOptions.taxonRank 
+
    ) {
-     console.log(d.name, filterOptions.taxonRank);
+     console.log(d.taxonRank, filterOptions.taxonRank);
      return true
    }
    return false
