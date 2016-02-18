@@ -5,8 +5,8 @@
   function DendrogramController(bookmarksService, $scope) {
     var vm = this
     vm.data = 'whatever'
-    vm.filter = ''
-    vm.habitat = ''
+    vm.filter = bookmarksService.getView.filter
+    vm.habitat = bookmarksService.getView.habitat
     vm.showBookmarkForm = false
 
     vm.createBookmark = function() {

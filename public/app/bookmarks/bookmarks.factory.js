@@ -5,7 +5,8 @@ function bookmarksService($http) {
   service = {
     getBookmarks: getBookmarks,
     createBookmark: createBookmark,
-    deleteBookmark: deleteBookmark
+    deleteBookmark: deleteBookmark,
+    getView: getView // get current view
   }
   return service
 
@@ -37,4 +38,13 @@ function bookmarksService($http) {
         return result
       })
   }
+
+  function getView() {
+    return {
+      habitat: 'ghost',
+      filter: 'poof'
+    }
+    
+  }
+
 }

@@ -9,7 +9,8 @@ function configRoutes($stateProvider, $urlRouterProvider) {
     })
     .state('bookmarks', {
       url: '/bookmarks',
-      templateUrl: 'app/bookmarks/bookmarks.html'
+      templateUrl: 'app/bookmarks/bookmarks.html',
+      controller: 'bookmarksController as bookmarks'
     })
 
     $urlRouterProvider.otherwise('/')
