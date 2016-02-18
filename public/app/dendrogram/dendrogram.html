@@ -1,8 +1,20 @@
 <div class="dendrogram-view" ng-controller="DendrogramController as dendrogram">
-  <!-- <dendrogram data="dendrogram.data"></dendrogram> -->
-  <interactiveradialdendrogram data="dendrogram.data"></interactiveradialdendrogram>
+
+  <interactiveradialdendrogram
+    filter="dendrogram.filter"
+    habitat="dendrogram.habitat">
+  </interactiveradialdendrogram>
+
   <div class="filter">
-    The filter stuff will go here.
+    <h2>Filter</h2>
+    <label for="dendrogram-filter">Search</label>
+    <input name="dendrogram-filter" ng-model="dendrogram.filter">
+    <label for="habitat-filter">Habitat</label>
+    <select name="habitat-filter" ng-model="dendrogram.habitat">
+      <option value="pelagic">Pelagic</option>
+      <option value="abyssal">Abyssal</option>
+      <option value="bathyal">Bathyal</option>
+    </select>
   </div>
 
 </div>

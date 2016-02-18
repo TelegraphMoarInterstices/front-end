@@ -1,18 +1,22 @@
-<div class="bookmarks-view">
+<div class="bookmarks-view" ng-controller="bookmarksController as bookmarks">
   <h2>Bookmarks</h2>
-  <div class="bookmark">
-    <span><a href="#">View</a></span>
-    <span><a href="#">Delete</a></span>
-    <span>Description for bookmark 1</span>
+
+  <div class="bookmark" ng-repeat="bookmark in bookmarks.bookmarks">
+    <span ng-show="!showInfo"><a ng-click="showInfo = !showInfo">View details</a></span>
+    <span ng-show="showInfo"><a ng-click="showInfo = !showInfo">Hide details</a></span>
+    <span ng-click="bookmarks.delete()">Delete</span>
+    <span>{{ bookmark.description }}</span>
+    <div ng-show="showInfo">
+      <p>
+        <strong>Habitat: </strong> {{bookmark.characterstics.habitat[0]}}
+      </p>
+      <p>
+        <strong>Diet: </strong>{{bookmark.characterstics.diet}}
+      </p>
+    </div>
   </div>
-  <div class="bookmark">
-    <span><a href="#">View</a></span>
-    <span><a href="#">Delete</a></span>
-    <span>Description for bookmark 2</span>
+  <div>
+    {{ bookmarks.message }}
   </div>
-  <div class="bookmark">
-    <span><a href="#">View</a></span>
-    <span><a href="#">Delete</a></span>
-    <span>Description for bookmark 3</span>
-  </div>
+
 </div>

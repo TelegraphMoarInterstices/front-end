@@ -1,0 +1,32 @@
+[
+  {
+    "description": "Koala-like critters",
+    "characterstics":
+      {
+        "habitat": ["temperate forest", "woodlands"],
+        "body-mass": [4, 15],
+        "diet": "eucalyptus leaves"
+      },
+    "date-created": "1455474834000"
+  },
+  {
+    "description": "Burgerfaces",
+    "characterstics":
+      {
+        "habitat": ["temperate forest", "woodlands"],
+        "body-mass": [4, 15],
+        "diet": "eucalyptus leaves"
+      },
+    "date-created": "1455474834000"
+  },
+  {
+    "description": "Critlitses",
+    "characterstics":
+      {
+        "habitat": ["temperate forest", "woodlands"],
+        "body-mass": [4, 15],
+        "diet": "eucalyptus leaves"
+      },
+    "date-created": "1455474834000"
+  }
+]
