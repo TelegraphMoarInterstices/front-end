@@ -8,7 +8,8 @@
       replace: true,
       template: '<div class="dendrogram"></div>',
       scope: {
-        data: '='
+        filter: '=',
+        habitat: '='
       },
       link: drawTreeOfLife,
       controller: 'DendrogramController',
@@ -20,7 +21,6 @@
 
   function drawTreeOfLife($scope, $element, $attr){
     //Inititalization
-    console.log(dendrogramService)
     //have to put this in here for the time being, need to figure out JSON/XML question
     /***** Execution ****/
     d3.json("app/sampleData/tree-100.json", function(error, data) {
@@ -213,6 +213,11 @@
           d.children = null;
             }
     }
+
+    $scope.$watch('vm.habitat', function(newVal, oldVaL) {
+      console.log(newVal)
+    })
+
     });
   }
  }
