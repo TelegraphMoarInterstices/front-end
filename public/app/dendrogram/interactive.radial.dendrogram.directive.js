@@ -4,13 +4,14 @@
 
   function dendrogram(dendrogramService) {
     return {
-      restrict: 'E',
+    restrict: 'E',
       replace: true,
       template: '<div class="dendrogram"></div>',
       scope: {
         filter: '=',
         habitat: '=',
-        taxonrank: '='
+        taxonrank: '=',
+        classtype: '='
       },
       link: drawTreeOfLife,
       controller: 'DendrogramController',
@@ -237,19 +238,6 @@
             }
     }
 
-    $scope.$watch('vm.class', function (newVal, oldVaL) {
-      if (newVal) {
-        var selectedClass = newVal
-        filterOptions.class = newVal
-
-        //select the links of that class
-        d3.selectAll('link')
-          .transition()
-          .duration(150)
-          .style("stroke", "red")
-      }
-    })
-
     $scope.$watch('vm.habitat', function(newVal, oldVaL) {
       if (newVal) {
         filterOptions.habitat = newVal
@@ -280,7 +268,7 @@
 
     $scope.$watch('vm.taxonrank', function(newVal, oldVaL) {
       if (newVal) {
-        filterOptions.taxonRank = newVal
+        filterOptions.taxonrank = newVal
         console.log("taxon rank changed", newVal)
 
         // Select the nodes that match the filter and modify them
@@ -306,9 +294,9 @@
             return dendrogramService.config.text.initialOpacity
           })
     $scope.$watch('vm.classtype', function(newVal, oldVaL) {
+      console.log(newVal)
       if (newVal) {
-        filterOptions.classType = newVal
-        console.log("the class has changed", newVal)
+        filterOptions.classtype = newVal
 
         // Select the nodes that match the filter and modify them
         d3.selectAll('circle')
@@ -341,13 +329,14 @@
   //  console.log(filterOptions);
    if (
      d.description === filterOptions.habitat |
-     d.taxonRank === filterOptions.taxonRank |
-     d.name === filterOptions.classType
+     d.taxonRank === filterOptions.taxonrank |
+     d.name === filterOptions.classtype
    ) {
+     console.log("The current class is ", filterOptions.classtype);
      return true
    }
-   console.log(filterOptions.classType);
    return false
- }
+   }
+
 
 })();

@@ -7,8 +7,8 @@
     vm.data = 'whatever'
     vm.filter = ''
     vm.habitat = ''
-    vm.taxonRank = ''
-    vm.classType = ''
+    vm.taxonrank = ''
+    vm.classtype = ''
 
     vm.showBookmarkForm = false
 
