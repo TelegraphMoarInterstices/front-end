@@ -11,9 +11,9 @@ function bookmarksService($http) {
 
   /*** Implementation ***/
   function getBookmarks() {
-    return $http.get('./app/bookmarks/bookmarks.json')
+    return $http.get('https://twig-of-life.herokuapp.com/api/user/1')
       .then(function(data){
-        return data.data
+        return data.data.bookmarks
       })
   }
 
