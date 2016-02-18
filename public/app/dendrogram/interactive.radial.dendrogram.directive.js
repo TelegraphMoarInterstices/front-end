@@ -278,7 +278,7 @@
      d.description === filterOptions.habitat |
      d.name === filterOptions.filter
    ) {
-     console.log(d.name, filterOptions.filter);
+    //  console.log(d.name, filterOptions.filter);
      return true
    }
    return false
