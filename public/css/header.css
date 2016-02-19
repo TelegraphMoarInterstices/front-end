@@ -3,11 +3,13 @@ header {
   flex-direction: row;
   margin: 0;
   width: 100%;
+  position: fixed;
 }
 
 .nav {
   display: flex;
   width: 100%;
+  padding-right: 10px;
   justify-content: flex-end;
 }
 
@@ -30,6 +32,7 @@ header {
   flex-direction: column;
   justify-content: flex-end;
   margin-left: 30px;
+  background-color: rgba(255,255,255, .8);
 }
 
 .nav-link a {
@@ -38,6 +41,7 @@ header {
   padding: 10px;
   border-bottom: 5px solid #333;
   transition: 0.1s ease all;
+
 }
 
 .nav-link a:hover {

@@ -1,8 +1,9 @@
-<div class="bookmarks-view" ng-controller="bookmarksController as bookmarks">
+<div class="bookmarks-view">
   <h2>Bookmarks</h2>
 
   <div class="bookmark" ng-repeat="bookmark in bookmarks.bookmarks">
-    <span ng-show="!showInfo"><a ng-click="showInfo = !showInfo">View details</a></span>
+    <span ng-click="bookmarks.view(bookmark)">View</span>
+    <span ng-show="!showInfo"><a ng-click="showInfo = !showInfo">Details</a></span>
     <span ng-show="showInfo"><a ng-click="showInfo = !showInfo">Hide details</a></span>
     <span ng-click="bookmarks.delete()">Delete</span>
     <span>{{ bookmark.title }}</span>

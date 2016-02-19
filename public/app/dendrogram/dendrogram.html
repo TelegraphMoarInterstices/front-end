@@ -1,18 +1,31 @@
 <div class="dendrogram-view dendro-pos" ng-controller="DendrogramController as dendrogram">
 
-  <interactiveradialdendrogram
+  <dendrogram2
     filter="dendrogram.filter"
-    habitat="dendrogram.habitat">
-  </interactiveradialdendrogram>
+    habitat="dendrogram.habitat"
+    bookmarkid="dendrogram.bookmarkId"
+    taxonrank="dendrogram.taxonrank"
+    classtype="dendrogram.classtype">
+  </dendrogram2>
 
   <div class="filter">
     <h2>Filter</h2>
     <label for="habitat-filter">Habitat</label>
     <select name="habitat-filter" ng-model="dendrogram.habitat">
-      <option value="pelagic">Pelagic</option>
-      <option value="abyssal">Abyssal</option>
-      <option value="bathyal">Bathyal</option>
+      <option value="pelagic">pelagic</option>
+      <option value="abyssal">abyssal</option>
+      <option value="bathyal">bathyal</option>
     </select>
+    <label for="classtype-filter">Class</label>
+    <select name="classtype-filter" ng-model="dendrogram.classtype">
+      <option value="Reptilia">reptilia</option>
+      <option value="Mammalia">mammalia</option>
+      <option value="Aves">aves</option>
+      <option value="Amphibia">amphibia</option>
+      <option value="Chondrichthyes">chondrichthyes</option>
+     <option value="Osteichthyes">osteichthyes</option>
+    </select>
+
     <div class="bookmark">
       <button ng-click="dendrogram.showBookmarkForm = !dendrogram.showBookmarkForm" type="button" name="showBookmarkForm" ng-show="!dendrogram.showBookmarkForm">Bookmark</button>
       <div class="bookmark-form" ng-show="dendrogram.showBookmarkForm">
@@ -28,6 +41,11 @@
         <button ng-click="dendrogram.createBookmark()" type="button" name="bookmark-button">Save Bookmark</button>
       </div>
     </div>
+  </div>
+
+  <div class="info-box">
+    <h3>NAME</h3>
+
   </div>
 
 </div>

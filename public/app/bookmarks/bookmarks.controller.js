@@ -1,7 +1,7 @@
 angular.module('app')
-.controller('bookmarksController', ['$http', 'bookmarksService', bookmarksController])
+.controller('bookmarksController', ['$state', '$http', 'bookmarksService', bookmarksController])
 
-function bookmarksController($http, bookmarksService) {
+function bookmarksController($state, $http, bookmarksService) {
   var vm = this
   bookmarksService.getBookmarks()
     .then(function(data) {
@@ -13,6 +13,16 @@ function bookmarksController($http, bookmarksService) {
         }
       })
     })
+
+  vm.view = function(bookmark) {
+    console.log(bookmark);
+    // Set currentView = bookmark in the bm service
+    // This is exposed to the dendrogram directive, and drives the display of that view.
+    bookmarksService.currentView = bookmark
+
+    // Go to dendrogram view
+    $state.go('home', { bookmarkId: bookmark.id})
+  }
 
   vm.delete = function() {
     console.log('dleeete.');

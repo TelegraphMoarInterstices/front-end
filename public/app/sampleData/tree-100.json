@@ -3,7 +3,7 @@
   "name": "chordates",
   "children": [{
     "taxonRank": "class",
-    "name": "Appendicularia",
+    "name": "Reptilia",
     "children": [{
       "taxonRank": "order",
       "name": "Copelata",
@@ -24,7 +24,7 @@
     }]
   }, {
     "taxonRank": "class",
-    "name": "Appendicularia",
+    "name": "Mammalia",
     "children": [{
       "taxonRank": "order",
       "name": "Copelata",
@@ -448,7 +448,7 @@
     }]
   }, {
     "taxonRank": "class",
-    "name": "Ascidiacea",
+    "name": "Reptilia",
     "children": [{
       "taxonRank": "order",
       "name": "Enterogona",
@@ -670,7 +670,7 @@
     }]
   }, {
     "taxonRank": "class",
-    "name": "",
+    "name": "Aves",
     "children": [{
       "taxonRank": "order",
       "name": "",
