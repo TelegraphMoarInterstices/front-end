@@ -30,7 +30,7 @@
 
         var filterOptions = {}
 
-        d3.json("app/sampleData/tree-100.json", function(error, data) {
+        d3.json("app/sampleData/tree-4020.json", function(error, data) {
           if (error) return console.warn(error);
 
         var tooltip = dendrogramService.initializeTooltip()
