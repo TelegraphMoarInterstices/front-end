@@ -8,8 +8,10 @@
     vm.bookmarkId = $stateParams.bookmarkId
     console.log('bookmarkId', vm.bookmarkId);
     vm.data = 'whatever'
-    // vm.filter = bookmarksService.getView.filter
-    // vm.habitat = bookmarksService.getView.habitat
+    vm.filter = ''
+    vm.habitat = ''
+    vm.classtype = ''
+
     vm.showBookmarkForm = false
 
     vm.createBookmark = function() {

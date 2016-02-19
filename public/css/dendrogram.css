@@ -7,11 +7,22 @@
 }
 
 .filter {
-  flex: 1;
-  background: #888;
-  color: #ddd;
-  padding: 30px;
-  height: 400px;
+  position: fixed;
+  right: 0;
+  top: 70px;
+  text-align: right;
+  width: 190px;
+  padding: 10px;
+  background-color: rgba(255,255,255, .8);
+}
+
+.info-box {
+  position: fixed;
+  right: 0;
+  bottom: 70px;
+  width: 190px;
+  padding: 10px;
+  background-color: rgba(255,255,255, .8);
 }
 
 .link {
@@ -24,6 +35,11 @@
   fill: white;
   stroke: orange;
   stroke-width: 1px;
+}
+
+.node text{
+  stroke: black;
+  font-weight: 100;
 }
 
 div.tooltip {
