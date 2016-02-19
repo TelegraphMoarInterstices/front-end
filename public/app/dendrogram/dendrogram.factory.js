@@ -58,9 +58,13 @@
     }
 
     function initializeTooltip() {
-      return d3.select("body").append("div")
-       .attr("class", "tooltip")
-       .style("opacity", 0)
+      return d3.select(".info-box").append("div")
+       .attr({
+         "class": "info-box",
+         "opacity": 1,
+         'color': 'red'
+       })
+       .text('hey')
     }
   }
 })()
