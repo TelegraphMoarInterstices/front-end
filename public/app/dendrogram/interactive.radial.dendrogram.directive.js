@@ -4,7 +4,7 @@
 
   function dendrogram(dendrogramService) {
     return {
-    restrict: 'E',
+      restrict: 'E',
       replace: true,
       template: '<div class="dendrogram"></div>',
       scope: {
@@ -19,59 +19,57 @@
       bindToController: true
     }
 
-  function drawTreeOfLife($scope, $element, $attr){
-    var filterOptions = {}
-    d3.json("app/sampleData/tree-1000.json", function(error, data) {
-      if (error) return console.warn(error);
+    function drawTreeOfLife($scope, $element, $attr) {
+      var filterOptions = {}
+      d3.json("app/sampleData/tree-100.json", function(error, data) {
+        if (error) return console.warn(error);
 
-    var tooltip = dendrogramService.initializeTooltip()
-    var diameter = dendrogramService.config.diameter;
-    var multiplier = dendrogramService.config.multiplier;
+      var tooltip = dendrogramService.initializeTooltip()
+      var diameter = dendrogramService.config.diameter;
+      var multiplier = dendrogramService.config.multiplier;
 
-    //convention with d3 seems to be to set margins as well
-    var margin = {top: 2, right: 2, bottom: 2, left: 2},
-        width = diameter,
-        height = diameter;
+      //convention with d3 seems to be to set margins as well
+      var margin = {top: 2, right: 2, bottom: 2, left: 2},
+          width = diameter,
+          height = diameter;
 
-    //this sets the durations for the transitions when nodes collapse and expand in ms
-    var i = 0,
-        duration = 350,
-        root;
+      //this sets the durations for the transitions when nodes collapse and expand in ms
+      var i = 0,
+          duration = 350,
+          root;
 
-    //this is the where the tree shap is created with size being a fraction of
-    //diameter along with the relationships between nodes
-    var tree = d3.layout.tree()
-        .size([360, diameter / 1-10])
-        .separation(function(a, b) { return (a.parent == b.parent ? 1 : multiplier) / a.depth; });
+      //this is the where the tree shap is created with size being a fraction of
+      //diameter along with the relationships between nodes
+      var tree = d3.layout.tree()
+          .size([360, diameter / 2-1])
+          .separation(function(a, b) { return (a.parent == b.parent ? 20 : 1) / a.depth; });
 
-    //sets the diagonoal projection for the dendrogram
-    var diagonal = d3.svg.diagonal.radial()
-        .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
+      //sets the diagonoal projection for the dendrogram
+      var diagonal = d3.svg.diagonal.radial()
+          .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
 
-    //trying to integrate vz variable structure from Zach's angular + d3 solution
-    var svg = d3.select($element[0]).append("svg")
-        .attr("width", width)
-        .attr("height", height)
-      .append("g")
-        .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+      //trying to integrate vz variable structure from Zach's angular + d3 solution
+      var svg = d3.select($element[0]).append("svg")
+          .attr("width", width)
+          .attr("height", height)
+        .append("g")
+          .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-    //we need to set root equal to a variable, in my working example var life = a
-    //big XML of data, need to figure out how to pull this from a JSON
-    root = data;
-//we think this needs to change
-    root.x0 = height / 2;
-    root.y0 = 0;
+      //we need to set root equal to a variable, in my working example var life = a
+      //big XML of data, need to figure out how to pull this from a JSON
+      root = data;
+      root.x0 = height / 2;
+      root.y0 = 0;
 
-    //start with all children collapsed, if we nix this next line then the graph
-    //will start uncollapsed with all nodes displayed
-    // root.children.forEach(collapse);
-    update(root);
+      //start with all children collapsed, if we nix this next line then the graph
+      //will start uncollapsed with all nodes displayed
+      // root.children.forEach(collapse);
+      update(root);
 
-  //setting height on the frame of the dendrogram
-    d3.select(self.frameElement).style("height", "900px");
+      //setting height on the frame of the dendrogram
+      d3.select(self.frameElement).style("height", "1200px");
 
     //the following modifies the dendrogram using functions declared at the bottom
-    //link and node variables are also declared here
     function update(source) {
 
       //compute the new tree layout
@@ -79,7 +77,7 @@
           links = tree.links(nodes);
 
       //normalize fixed-depth for each node, magically!
-      nodes.forEach(function(d) { d.y = d.depth * multiplier; });
+      nodes.forEach(function(d) { d.y = d.depth * 50; });
 
       //update the nodes  ...
       var node = svg.selectAll("g.node")
@@ -123,7 +121,6 @@
       //fixed text positioning so text on both sides of dendrogram appears correctly
       nodeUpdate.select("text")
           .style("fill-opacity", 1)
-          .style("color", "black")
           .attr("text-anchor", function(d) {
             if (d.x > 180) {
               return "end"
@@ -181,7 +178,7 @@
       nodes.forEach(function(d) {
         d.x0 = d.x;
         d.y0 = d.y;
-      });
+        });
     }
 
   //functions D3 is using
@@ -238,105 +235,105 @@
             }
     }
 
-    $scope.$watch('vm.habitat', function(newVal, oldVaL) {
-      if (newVal) {
-        filterOptions.habitat = newVal
+      $scope.$watch('vm.habitat', function(newVal, oldVaL) {
+        if (newVal) {
+          filterOptions.habitat = newVal
 
-        // Select the nodes that match the filter and modify them
-        d3.selectAll('circle')
-          .transition()
-          .duration(150)
-          .attr("r", function(d) {
-            if  (matchFilter(d, filterOptions)) {
-              return dendrogramService.config.node.selectedSize
-            }
-            return dendrogramService.config.node.initialSize
-          })
+          // Select the nodes that match the filter and modify them
+          d3.selectAll('circle')
+            .transition()
+            .duration(150)
+            .attr("r", function(d) {
+              if  (matchFilter(d, filterOptions)) {
+                return dendrogramService.config.node.selectedSize
+              }
+              return dendrogramService.config.node.initialSize
+            })
 
-        // Modify the appearance of the text as well
-        d3.selectAll('.node-name')
-          .transition()
-          .duration(150)
-          .style('fill', function(d) {
-            if  (matchFilter(d, filterOptions)) {
-              return dendrogramService.config.text.selectedOpacity
-            }
-            return dendrogramService.config.text.initialOpacity
-          })
-      }
+          // Modify the appearance of the text as well
+          d3.selectAll('.node-name')
+            .transition()
+            .duration(150)
+            .style('fill', function(d) {
+              if  (matchFilter(d, filterOptions)) {
+                return dendrogramService.config.text.selectedOpacity
+              }
+              return dendrogramService.config.text.initialOpacity
+            })
+        }
+      })
+
+      $scope.$watch('vm.taxonrank', function(newVal, oldVaL) {
+        if (newVal) {
+          filterOptions.taxonrank = newVal
+          console.log("taxon rank changed", newVal)
+
+          // Select the nodes that match the filter and modify them
+          d3.selectAll('circle')
+            .transition()
+            .duration(150)
+            .attr("r", function(d) {
+              if  (matchFilter(d, filterOptions)) {
+                return dendrogramService.config.node.selectedSize
+              }
+              return dendrogramService.config.node.initialSize
+            })
+        }
+      })
+          // Modify the appearance of the text as well
+          d3.selectAll('.node-name')
+            .transition()
+            .duration(150)
+            .style('opacity', function(d) {
+              if  (matchFilter(d, filterOptions)) {
+                return dendrogramService.config.text.selectedOpacity
+              }
+              return dendrogramService.config.text.initialOpacity
+            })
+
+      $scope.$watch('vm.classtype', function(newVal, oldVaL) {
+        if (newVal) {
+          filterOptions.classtype = newVal
+
+          // Select the nodes that match the filter and modify them
+          d3.selectAll('circle')
+            .transition()
+            .duration(150)
+            .attr("r", function(d) {
+              if  (matchClass(d, filterOptions)) {
+                return dendrogramService.config.node.selectedSize
+              }
+              return dendrogramService.config.node.initialSize
+            })
+
+          // Modify the appearance of the text as well
+          d3.selectAll('.node-name')
+            .transition()
+            .duration(150)
+            .style('fill', function(d) {
+              if  (matchFilter(d, filterOptions)) {
+                return dendrogramService.config.text.selectedOpacity
+              }
+              return dendrogramService.config.text.initialOpacity
+            })
+        }
+      })
     })
-
-    $scope.$watch('vm.taxonrank', function(newVal, oldVaL) {
-      if (newVal) {
-        filterOptions.taxonrank = newVal
-        console.log("taxon rank changed", newVal)
-
-        // Select the nodes that match the filter and modify them
-        d3.selectAll('circle')
-          .transition()
-          .duration(150)
-          .attr("r", function(d) {
-            if  (matchFilter(d, filterOptions)) {
-              return dendrogramService.config.node.selectedSize
-            }
-            return dendrogramService.config.node.initialSize
-          })
-      }
-    })
-        // Modify the appearance of the text as well
-        d3.selectAll('.node-name')
-          .transition()
-          .duration(150)
-          .style('opacity', function(d) {
-            if  (matchFilter(d, filterOptions)) {
-              return dendrogramService.config.text.selectedOpacity
-            }
-            return dendrogramService.config.text.initialOpacity
-          })
-    $scope.$watch('vm.classtype', function(newVal, oldVaL) {
-      console.log(newVal)
-      if (newVal) {
-        filterOptions.classtype = newVal
-
-        // Select the nodes that match the filter and modify them
-        d3.selectAll('circle')
-          .transition()
-          .duration(150)
-          .attr("r", function(d) {
-            if  (matchFilter(d, filterOptions)) {
-              return dendrogramService.config.node.selectedSize
-            }
-            return dendrogramService.config.node.initialSize
-          })
-      }
-    })
-        // Modify the appearance of the text as well
-        d3.selectAll('.node-name')
-          .transition()
-          .duration(150)
-          .style('opacity', function(d) {
-            if  (matchFilter(d, filterOptions)) {
-              return dendrogramService.config.text.selectedOpacity
-            }
-            return dendrogramService.config.text.initialOpacity
-          })
-
-    });
+   }
   }
+ function matchFilter(d, filterOptions) {
+   if
+   (d.description === filterOptions.habitat) {
+      return true
+    }
+   return false
  }
 
- function matchFilter(d, filterOptions) {
-  //  console.log(filterOptions);
-   if (
-     d.description === filterOptions.habitat |
-     d.taxonRank === filterOptions.taxonrank |
-     d.name === filterOptions.classtype
-   ) {
-     console.log("The current class is ", filterOptions.classtype);
+ function matchClass(d, filterOptions) {
+   if (d.name === filterOptions.classtype) {
+     console.log("your new class is", filterOptions.classtype)
      return true
    }
    return false
-   }
-
-
+ }
 })();

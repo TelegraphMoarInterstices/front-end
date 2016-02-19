@@ -15,7 +15,7 @@
       <option value="abyssal">abyssal</option>
       <option value="bathyal">bathyal</option>
     </select>
-    <label for="taxonrank-filter">Taxon Level</label>
+    <label for="taxonrank-filter">Taxon Level</label> 
     <select name="taxonrank-filter" ng-model="dendrogram.taxonrank">
       <option value="phylum">phylum</option>
       <option value="class">class</option>
@@ -31,8 +31,9 @@
       <option value="Aves">aves</option>
       <option value="Amphibia">amphibia</option>
       <option value="Chondrichthyes">chondrichthyes</option>
-      <option value="Osteichthyes">osteichthyes</option>
+     <option value="Osteichthyes">osteichthyes</option>
     </select>
+
     <div class="bookmark">
       <button ng-click="dendrogram.showBookmarkForm = !dendrogram.showBookmarkForm" type="button" name="showBookmarkForm" ng-show="!dendrogram.showBookmarkForm">Bookmark</button>
       <div class="bookmark-form" ng-show="dendrogram.showBookmarkForm">
