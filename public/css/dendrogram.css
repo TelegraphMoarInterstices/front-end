@@ -26,6 +26,11 @@
   stroke-width: 1px;
 }
 
+.node text{
+  stroke: black;
+  font-weight: 100;
+}
+
 div.tooltip {
              position: absolute;
              max-width: 200px;

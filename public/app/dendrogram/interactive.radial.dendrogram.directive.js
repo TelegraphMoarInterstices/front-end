@@ -42,7 +42,7 @@
       //diameter along with the relationships between nodes
       var tree = d3.layout.tree()
           .size([360, diameter / 2-1])
-          .separation(function(a, b) { return (a.parent == b.parent ? 20 : 1) / a.depth; });
+          .separation(function(a, b) { return (a.parent == b.parent ? 2 : 1) / a.depth; });
 
       //sets the diagonoal projection for the dendrogram
       var diagonal = d3.svg.diagonal.radial()
@@ -104,7 +104,7 @@
           .attr("transform", function(d) { return d.x < 180 ? "translate(-2)" : "rotate(360)translate(2)"; })
           // .attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.name.length * 8.5)  + ")"; })
           .text(function(d) { return d.name; })
-          .style('opacity', dendrogramService.config.text.initialOpacity)
+          // .style('opacity', dendrogramService.config.text.initialOpacity)
           .style("fill-opacity", 1e-6)
           .attr('class', 'node-name')
 
@@ -116,7 +116,7 @@
       //setting node styling to differentiate between nodes that have more information contained within it them
       nodeUpdate.select("circle")
           .attr("r", dendrogramService.config.node.initialSize)
-          .style("fill", function(d) { return d._children ? "slategray" : "white"; })
+          .style("fill", function(d) { return d._children ? "orange" : "white"; })
 
       //fixed text positioning so text on both sides of dendrogram appears correctly
       nodeUpdate.select("text")
@@ -263,34 +263,6 @@
         }
       })
 
-      $scope.$watch('vm.taxonrank', function(newVal, oldVaL) {
-        if (newVal) {
-          filterOptions.taxonrank = newVal
-          console.log("taxon rank changed", newVal)
-
-          // Select the nodes that match the filter and modify them
-          d3.selectAll('circle')
-            .transition()
-            .duration(150)
-            .attr("r", function(d) {
-              if  (matchFilter(d, filterOptions)) {
-                return dendrogramService.config.node.selectedSize
-              }
-              return dendrogramService.config.node.initialSize
-            })
-        }
-      })
-          // Modify the appearance of the text as well
-          d3.selectAll('.node-name')
-            .transition()
-            .duration(150)
-            .style('opacity', function(d) {
-              if  (matchFilter(d, filterOptions)) {
-                return dendrogramService.config.text.selectedOpacity
-              }
-              return dendrogramService.config.text.initialOpacity
-            })
-
       $scope.$watch('vm.classtype', function(newVal, oldVaL) {
         if (newVal) {
           filterOptions.classtype = newVal
@@ -310,7 +282,7 @@
           d3.selectAll('.node-name')
             .transition()
             .duration(150)
-            .style('fill', function(d) {
+            .style('opacity', function(d) {
               if  (matchFilter(d, filterOptions)) {
                 return dendrogramService.config.text.selectedOpacity
               }
@@ -321,6 +293,7 @@
     })
    }
   }
+
  function matchFilter(d, filterOptions) {
    if
    (d.description === filterOptions.habitat) {
