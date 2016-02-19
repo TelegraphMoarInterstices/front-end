@@ -1,15 +1,16 @@
 (function(){
   angular.module('app')
-  .directive('interactiveradialdendrogram', [ "dendrogramService", dendrogram] )
+  .directive('interactiveradialdendrogram', [ "dendrogramService", 'bookmarksService', dendrogram] )
 
-  function dendrogram(dendrogramService) {
+  function dendrogram(dendrogramService, bookmarksService) {
     return {
       restrict: 'E',
       replace: true,
       template: '<div class="dendrogram"></div>',
       scope: {
         filter: '=',
-        habitat: '='
+        habitat: '=',
+        bookmarkid: '='
       },
       link: drawTreeOfLife,
       controller: 'DendrogramController',
@@ -18,6 +19,13 @@
     }
 
   function drawTreeOfLife($scope, $element, $attr){
+    //====== CJ magic: load current view with bookmarks service,
+      // or load default value
+      // Then use that to drive the display
+    var currentView = bookmarksService.currentView
+    console.log('currentView: ', currentView);
+    /**********************************************/
+
     var filterOptions = {}
     d3.json("app/sampleData/tree-100.json", function(error, data) {
       if (error) return console.warn(error);
@@ -237,6 +245,13 @@
     // How to watch more than one thing at once?
     $scope.$watch('vm.filter', function(newVal, oldVaL) {
       // console.log('i can haz vm.filter:', newVal);
+    })
+
+    $scope.$watch('vm.bookmarkId', function(newVal, oldVaL) {
+      if (newVal) {
+        // Call bm service, get the bookmark
+        // update the tree
+      }
     })
 
     $scope.$watch('vm.habitat', function(newVal, oldVaL) {

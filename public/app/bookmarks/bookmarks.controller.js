@@ -16,10 +16,12 @@ function bookmarksController($state, $http, bookmarksService) {
 
   vm.view = function(bookmark) {
     console.log(bookmark);
-    // Set filter options
+    // Set currentView = bookmark in the bm service
+    // This is exposed to the dendrogram directive, and drives the display of that view.
+    bookmarksService.currentView = bookmark
 
     // Go to dendrogram view
-    $state.go('home')
+    $state.go('home', { bookmarkId: bookmark.id})
   }
 
   vm.delete = function() {

@@ -2,11 +2,12 @@ angular.module('app')
 .factory('bookmarksService', ['$http', bookmarksService])
 
 function bookmarksService($http) {
+  var currentView = {}
   service = {
     getBookmarks: getBookmarks,
     createBookmark: createBookmark,
     deleteBookmark: deleteBookmark,
-    getView: getView // get current view
+    currentView: currentView
   }
   return service
 
@@ -39,12 +40,8 @@ function bookmarksService($http) {
       })
   }
 
-  function getView() {
-    return {
-      habitat: 'ghost',
-      filter: 'poof'
-    }
-    
-  }
+  // function getView() {
+  //   return
+  // }
 
 }

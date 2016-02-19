@@ -1,12 +1,15 @@
 (function() {
   angular.module('app')
-  .controller('DendrogramController', ['bookmarksService', DendrogramController])
+  .controller('DendrogramController', ['bookmarksService', '$stateParams', DendrogramController])
 
-  function DendrogramController(bookmarksService, $scope) {
+  function DendrogramController(bookmarksService, $stateParams) {
     var vm = this
+
+    vm.bookmarkId = $stateParams.bookmarkId
+    console.log('bookmarkId', vm.bookmarkId);
     vm.data = 'whatever'
-    vm.filter = bookmarksService.getView.filter
-    vm.habitat = bookmarksService.getView.habitat
+    // vm.filter = bookmarksService.getView.filter
+    // vm.habitat = bookmarksService.getView.habitat
     vm.showBookmarkForm = false
 
     vm.createBookmark = function() {
