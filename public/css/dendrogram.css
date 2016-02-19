@@ -18,13 +18,20 @@
 }
 
 .info-box {
-  color: white;
+  color: black;
   position: fixed;
   right: 0;
-  bottom: 70px;
+  bottom: 170px;
   width: 190px;
   padding: 10px;
-  background-color: rgba(0,0,0, .8);
+  background-color: rgba(255, 255, 255, 0.7);
+  opacity: 0;
+}
+.info-box h3 {
+  text-transform: uppercase;
+}
+.info-box a {
+  color: #107535;
 }
 
 .link {

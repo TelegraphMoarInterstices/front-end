@@ -203,26 +203,20 @@
         .style("opacity", 0.9);
         tooltip
         .html(
-          "<h3>" +
-          d.name +
-          "</h3>" +
-          "<p>" +
-          d.description +
-          "</p>" +
+          "<h3>" + d.name + "</h3>" +
+          "<p>" +  d.description + "</p>" +
           "<div>" +
-          '<img src="http://lorempixel.com/100/100/animals/">' +
-          '</div>'
+            '<img src="http://lorempixel.com/100/100/animals/">' +
+          '</div>' +
+          '<a href="' + d.references + '">More...' + '</a>'
         )
-        .style("left", (d3.event.pageX) + "px")
-        .style("top", (d3.event.pageY - 28) + "px")
       }
     }
 
     function hideTooltip() {
-      console.log('out');
       tooltip
         .transition()
-        .duration(1000)
+        .duration(4000)
         .style("opacity", 0);
     }
 
