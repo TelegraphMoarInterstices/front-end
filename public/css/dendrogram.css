@@ -7,43 +7,44 @@
 }
 
 .filter {
-  position: relative;
-  text-align: right;
-  /*right: 30px;*/
-  top: 100px;
+  color: white;
   position: fixed;
   right: 0;
   top: 70px;
   text-align: right;
   width: 190px;
   padding: 10px;
-  background-color: rgba(255,255,255, .8);
+  background-color: rgba(0,0,0, .8);
 }
 
 .info-box {
+  color: white;
   position: fixed;
   right: 0;
   bottom: 70px;
   width: 190px;
   padding: 10px;
-  background-color: rgba(255,255,255, .8);
+  background-color: rgba(0,0,0, .8);
 }
 
 .link {
   fill: none;
-  stroke: #0FC3C3;
+  /*stroke: #0FC3C3;*/
+
+  stroke: #00FF5E;
   stroke-width: 1px;
 }
 
 .node circle{
-  fill: white;
-  stroke: orange;
+  fill: #2D2E78;
+  stroke: #00FF5E;
   stroke-width: 1px;
 }
 
 .node text{
-  stroke: black;
+  stroke: white;
   font-weight: 100;
+  font-size: 12px;
 }
 
 div.tooltip {
@@ -68,33 +69,6 @@ div.tooltip img {
   margin: 5px;
 }
 
-.search-filter {
-  margin-bottom: 6px;
-  width: 100px;
-
-}
-
-.dendro-pos {
-  position: relative;
-  top: -100px;
-}
-
-.styled-select {
-   width: 100px;
-   height: 25px;
-   overflow: hidden;
-   border: 1px solid #ccc;
-   border-radius: 0;
-}
-
-.styled-select select {
-   background: transparent;
-   width: 268px;
-   padding: 5px;
-   font-size: 16px;
-   line-height: 1;
-   border: 0;
-   border-radius: 0;
-   height: 34px;
-   -webkit-appearance: none;
+.habitat-style {
+  margin-bottom: 10px;
 }

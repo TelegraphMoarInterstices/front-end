@@ -1,21 +1,21 @@
-<div class="dendrogram-view dendro-pos" ng-controller="DendrogramController as dendrogram">
+<div class="dendrogram-view" ng-controller="DendrogramController as dendrogram">
 
-  <dendrogram2
+  <interactiveradialdendrogram
     filter="dendrogram.filter"
     habitat="dendrogram.habitat"
-    bookmarkid="dendrogram.bookmarkId"
     taxonrank="dendrogram.taxonrank"
     classtype="dendrogram.classtype">
-  </dendrogram2>
+  </interactiveradialdendrogram>
 
   <div class="filter">
     <h2>Filter</h2>
     <label for="habitat-filter">Habitat</label>
-    <select name="habitat-filter" ng-model="dendrogram.habitat">
+    <select class="habitat-style" name="habitat-filter" ng-model="dendrogram.habitat">
       <option value="pelagic">pelagic</option>
       <option value="abyssal">abyssal</option>
       <option value="bathyal">bathyal</option>
     </select>
+    <br>
     <label for="classtype-filter">Class</label>
     <select name="classtype-filter" ng-model="dendrogram.classtype">
       <option value="Reptilia">reptilia</option>
