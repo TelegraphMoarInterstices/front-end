@@ -7,39 +7,44 @@
 }
 
 .filter {
+  color: white;
   position: fixed;
   right: 0;
   top: 70px;
   text-align: right;
   width: 190px;
   padding: 10px;
-  background-color: rgba(255,255,255, .8);
+  background-color: rgba(0,0,0, .8);
 }
 
 .info-box {
+  color: white;
   position: fixed;
   right: 0;
   bottom: 70px;
   width: 190px;
   padding: 10px;
-  background-color: rgba(255,255,255, .8);
+  background-color: rgba(0,0,0, .8);
 }
 
 .link {
   fill: none;
-  stroke: #0FC3C3;
+  /*stroke: #0FC3C3;*/
+
+  stroke: #00FF5E;
   stroke-width: 1px;
 }
 
 .node circle{
-  fill: white;
-  stroke: orange;
+  fill: #2D2E78;
+  stroke: #00FF5E;
   stroke-width: 1px;
 }
 
 .node text{
-  stroke: black;
+  stroke: white;
   font-weight: 100;
+  font-size: 12px;
 }
 
 div.tooltip {
@@ -62,4 +67,8 @@ div.tooltip {
 div.tooltip img {
   border-radius: 50%;
   margin: 5px;
+}
+
+.habitat-style {
+  margin-bottom: 10px;
 }
