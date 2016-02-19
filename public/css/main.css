@@ -3,6 +3,7 @@ body * {
 }
 
 body {
+	background-color: #ccc;
   display: flex;
   flex-direction: column;
   align-items: center;
