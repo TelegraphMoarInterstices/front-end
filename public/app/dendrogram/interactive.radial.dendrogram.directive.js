@@ -94,7 +94,7 @@
       //adding circles to nodes
       nodeEnter.append("circle")
           .attr("r", dendrogramService.config.node.initialSize)
-          .style("fill", function(d) { return d._children ? "orange" : "#fff"; });
+          // .style("fill", function(d) { return d._children ? "orange" : "#fff"; });
 
       //adding text and setting attributes
       nodeEnter.append("text")
@@ -116,7 +116,7 @@
       //setting node styling to differentiate between nodes that have more information contained within it them
       nodeUpdate.select("circle")
           .attr("r", dendrogramService.config.node.initialSize)
-          .style("fill", function(d) { return d._children ? "orange" : "white"; })
+          // .style("fill", function(d) { return d._children ? "orange" : "white"; })
 
       //fixed text positioning so text on both sides of dendrogram appears correctly
       nodeUpdate.select("text")
