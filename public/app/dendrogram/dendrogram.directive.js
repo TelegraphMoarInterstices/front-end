@@ -206,7 +206,7 @@
           "<h3>" + d.name + "</h3>" +
           "<p>" +  d.description + "</p>" +
           "<div>" +
-          '<img src="http://lorempixel.com/100/100/animals/">' +
+            '<img src="http://lorempixel.com/100/100/animals/">' +
           '</div>' +
           '<a href="' + d.references + '">More...' + '</a>'
         )
@@ -214,11 +214,10 @@
     }
 
     function hideTooltip() {
-      console.log('out');
-      // tooltip
-      //   .transition()
-      //   .duration(1000)
-      //   .style("opacity", 0);
+      tooltip
+        .transition()
+        .duration(4000)
+        .style("opacity", 0);
     }
 
     // Collapse child nodes on click.
