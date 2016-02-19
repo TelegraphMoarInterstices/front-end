@@ -1,12 +1,27 @@
 (function() {
   angular.module('app')
-  .controller('DendrogramController', [DendrogramController])
+  .controller('DendrogramController', ['bookmarksService', DendrogramController])
 
-  function DendrogramController() {
+  function DendrogramController(bookmarksService, $scope) {
     var vm = this
-    // Maybe do an $http to retrieve json data here,
-    // instead of using D3.json. Not sure which is best.
-    // Right now, .data is not doing anything, obvs.
     vm.data = 'whatever'
+    vm.filter = ''
+    vm.habitat = ''
+    vm.showBookmarkForm = false
+
+    vm.createBookmark = function() {
+      vm.showBookmarkForm = false
+      // Several values are temporarily hardcoded
+      var bookmark = {
+        user_id: 1,
+        title: this.bookmarkTitle,
+        notes: this.bookmarkNote,
+        search: {
+          habitat: this.habitat,
+          class: ['reptiles', 'birds']
+        }
+      }
+      bookmarksService.createBookmark(bookmark)
+    }
   }
 })()
