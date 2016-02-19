@@ -7,6 +7,8 @@
     vm.data = 'whatever'
     vm.filter = ''
     vm.habitat = ''
+    vm.classtype = ''
+
     vm.showBookmarkForm = false
 
     vm.createBookmark = function() {
